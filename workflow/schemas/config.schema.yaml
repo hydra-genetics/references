@@ -12,8 +12,44 @@ properties:
   default_container:
     type: string
     description: name or path to a default docker/singularity container
+  reference:
+    type: object
+    properties:
+      fasta:
+        type: string
+        description: path to fasta reference file
+      mappability:
+        type: string
+        description: path to fasta mappability file
   required:
     - samples
     - units
     - resources
     - default_container
+
+  cnvkit_create_targets:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  cnvkit_create_anti_targets:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  cnvkit_build_normal_reference:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      mappability:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to cnvkit_build_normal_reference

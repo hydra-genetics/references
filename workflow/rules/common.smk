@@ -46,8 +46,4 @@ wildcard_constraints:
 
 
 def compile_output_list(wildcards):
-    return [
-        "references/dummy/%s_%s.dummy.txt" % (sample, t)
-        for sample in get_samples(samples)
-        for t in get_unit_types(units, sample)
-    ]
+    return ["references/cnvkit_build_normal_reference/cnvkit.PoN.cnn"]
