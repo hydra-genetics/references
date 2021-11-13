@@ -46,4 +46,7 @@ wildcard_constraints:
 
 
 def compile_output_list(wildcards):
-    return ["references/cnvkit_build_normal_reference/cnvkit.PoN.cnn"]
+    return [
+        "references/cnvkit_build_normal_reference/cnvkit.PoN.cnn",
+        "references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5",
+    ]

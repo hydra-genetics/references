@@ -49,7 +49,50 @@ properties:
         description: name or path to docker/singularity container
       mappability:
         type: string
-        description: name or path to docker/singularity container
+        description: file with mappability information
       extra:
         type: string
         description: extra parameters sent to cnvkit_build_normal_reference
+
+  bed_to_interval_list:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  preprocess_intervals:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      bin_length:
+        type: string
+        description: size of bin regions (WGS 1000, Exomes/target 0)
+      padding:
+        type: string
+        description: bases added to design regions (WGS 0, Exomes/target 250)
+      extra:
+        type: string
+        description: extra parameters sent to preprocess_intervals (-imr OVERLAPPING_ONLY)
+
+  collect_read_counts:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to collect_read_counts (needs -imr OVERLAPPING_ONLY)
+
+  create_read_count_panel_of_normals:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to create_read_count_panel_of_normals
