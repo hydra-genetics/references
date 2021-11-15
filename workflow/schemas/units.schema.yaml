@@ -22,11 +22,15 @@ properties:
   adapter:
     type: string
     description: one or more sequence, separated by ","
+  bam:
+    type: string
+    description: absolute path to bam file
+  vcf:
+    type: string
+    description: absolute path to vcf file
+  gvcf:
+    type: string
+    description: absolute path to gvcf file
 required:
   - sample
   - type
-  - run
-  - lane
-  - fastq1
-  - fastq2
-  - adapter

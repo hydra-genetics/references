@@ -20,13 +20,13 @@ cnvkit_build_normal_reference:
   container: "docker://gmsuppsala/somatic:develop"
 
 bed_to_interval_list:
-  container: "docker://hydragenetics/gatk4:4.1.9.0"
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
 
 preprocess_intervals:
-  container: "docker://hydragenetics/gatk4:4.1.9.0"
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
 
 collect_read_counts:
-  container: "docker://hydragenetics/gatk4:4.1.9.0"
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
 
 create_read_count_panel_of_normals:
-  container: "docker://hydragenetics/gatk4:4.1.9.0"
+  container: "docker://hydragenetics/gatk4:4.2.2.0"

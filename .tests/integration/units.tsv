@@ -1,2 +1,2 @@
-sample	type	run	lane	fastq1	fastq2	adapter
-HD832.HES45	T	1	1	input/R1.fq.gz	input/R2.fq.gz	ACGT
+sample	type	bam	vcf	gvcf
+HD832.HES45	T	alignment/merged_bam/HD832.HES45_T.bam	nnn	nnn

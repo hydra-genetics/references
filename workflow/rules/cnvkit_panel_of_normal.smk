@@ -40,11 +40,7 @@ rule cnvkit_create_anti_targets:
 
 rule cnvkit_build_normal_reference:
     input:
-        bams=[
-            "alignment/merged_bam/%s_%s.bam" % (sample, t)
-            for sample in get_samples(samples)
-            for t in get_unit_types(units, sample)
-        ],
+        bams=get_bams(units),
         target="references/cnvkit_create_targets/cnvkit_manifest.target.bed",
         antitarget="references/cnvkit_create_anti_targets/cnvkit_manifest.antitarget.bed",
         ref=config["reference"]["fasta"],

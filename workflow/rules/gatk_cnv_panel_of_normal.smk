@@ -48,8 +48,8 @@ rule preprocess_intervals:
 
 rule collect_read_counts:
     input:
-        bam="alignment/merged_bam/{sample}_{type}.bam",
-        bai="alignment/merged_bam/{sample}_{type}.bam.bai",
+        bam=lambda wildcards: get_units2(units, wildcards)[0].bam,
+        bai=lambda wildcards: "%s.bai" % get_units2(units, wildcards)[0].bam,
         interval="references/preprocess_intervals/%s.preprocessed.interval_list"
         % config["reference"]["design_bedfile"].split("/")[-1],
     output:
