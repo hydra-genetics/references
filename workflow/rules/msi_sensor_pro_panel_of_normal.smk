@@ -27,17 +27,15 @@ rule msisensor_pro_input_file:
     input:
         bams=get_bams(units),
     output:
-        PoN_list=temp("references/msisensor_pro_input_file/configure.txt"),
-    params:
-        bams_string="\n".join(["%s\t%s" % (bam.split("/")[-1], bam) for bam in get_bams(units)]),
+        PoN_list="references/msisensor_pro_input_file/configure.txt",
     log:
         "references/msisensor_pro_input_file/design.preprocessed.interval_list.log",
     conda:
         "../envs/msi_sensor_pro_panel_of_normal.yaml"
     container:
         config.get("msisensor_pro_input_file", {}).get("container", config["default_container"])
-    shell:
-        "(echo -e {params.bams_string} > {output.PoN_list}) &> {log}"
+    script:
+        "../scripts/msisensor_pro_input_file.py"
 
 
 rule msisensor_pro_baseline:

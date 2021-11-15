@@ -11,6 +11,7 @@ include: "rules/common.smk"
 include: "rules/cnvkit_panel_of_normal.smk"
 include: "rules/gatk_cnv_panel_of_normal.smk"
 include: "rules/msi_sensor_pro_panel_of_normal.smk"
+include: "rules/create_background_file.smk"
 
 
 report: "report/workflow.rst"
