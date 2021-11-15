@@ -61,30 +61,13 @@ def get_units2(units: pandas.DataFrame, wildcards: snakemake.io.Wildcards, type:
         file = units.loc[(wildcards.sample, types)].dropna()
     if files is not None:
         if isinstance(files, pandas.Series):
-            files = pandas.DataFrame([[f[1] for f in files.iteritems()], ], columns=[f[0] for f in files.iteritems()]).set_index(units.index.names)
+            files = pandas.DataFrame(
+                [
+                    [f[1] for f in files.iteritems()],
+                ],
+                columns=[f[0] for f in files.iteritems()],
+            ).set_index(units.index.names)
     return [file for file in files.itertuples()]
-
-
-def get_units3(units: pandas.DataFrame, wildcards: snakemake.io.Wildcards, type: str = None) -> pandas.DataFrame:
-    """
-    function used to extract one or more units from units.tsv
-    Args:
-        units: DataFrame generate by importing a file following schema defintion
-               found in pre-alignment/workflow/schemas/units.schema.tsv
-        wildcards: wildcards object with at least the following wildcard names
-               sample and type (optional, can also be passed as an argument).
-        type: N,T or R
-    Returns:
-        all units from the DataFrame that can be filtereted out using sample name
-        and unit type (N,T,R)
-    Raises:
-        raises an exception (KeyError) if no unit(s) can be extracted from the Dataframe
-    """
-    if type is None:
-        files = units.loc[(wildcards.sample, wildcards.type)].dropna()
-    else:
-        files = units.loc[(wildcards.sample, type)].dropna()
-    return [file for file in files.iteritems()]
 
 
 def get_bams(units: pandas.DataFrame) -> typing.List[str]:
@@ -99,13 +82,6 @@ def get_bams(units: pandas.DataFrame) -> typing.List[str]:
     return [unit.bam for unit in units.itertuples()]
 
 
-print(type(units))
-#print(get_units(units, snakemake.io.Wildcards(fromdict={'sample': 'HD832.HES45', "type": "T"})))
-files = units.loc[("HD832.HES45", "T")].dropna()
-print(type(files))
-#print(get_units2(units, snakemake.io.Wildcards(fromdict={'sample': 'HD832.HES45', "type": "T"}))[0].bam)
-
-
 wildcard_constraints:
     sample="|".join(samples.index),
     unit="N|T|R",
@@ -115,4 +91,5 @@ def compile_output_list(wildcards):
     return [
         "references/cnvkit_build_normal_reference/cnvkit.PoN.cnn",
         "references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5",
+        "references/msisensor_pro_baseline/Msisensor_pro_reference.list_baseline",
     ]

@@ -96,3 +96,27 @@ properties:
       extra:
         type: string
         description: extra parameters sent to create_read_count_panel_of_normals
+
+  msisensor_pro_scan:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  msisensor_pro_input_file:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  msisensor_pro_baseline:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to msisensor_pro_baseline
