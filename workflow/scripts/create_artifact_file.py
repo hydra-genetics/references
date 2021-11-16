@@ -8,24 +8,24 @@ artifact_panel = open(snakemake.output.artifact_panel, "w")
 callers = snakemake.params.callers
 
 FFPE_call_dict = {}
-for file_name in vcf_files :
+for file_name in vcf_files:
     with gzip.open(file_name, 'rt') as infile:
         file_content = infile.read().split("\n")
         header = True
-        for line in file_content :
-            if header :
-                if line[:6] == "#CHROM" :
+        for line in file_content:
+            if header:
+                if line[:6] == "#CHROM":
                     header = False
                 continue
             columns = line.strip().split("\t")
-            if len(columns) <= 1 :
+            if len(columns) <= 1:
                 continue
             chrom = columns[0]
             pos = int(columns[1])
             ref = columns[3]
             alt = columns[4]
             variant_type = "SNV"
-            if len(ref) > 1 or len(alt) > 1 :
+            if len(ref) > 1 or len(alt) > 1:
                 variant_type = "INDEL"
             INFO = columns[7]
             position_callers = INFO.split("CALLERS=")[1].split(";")[0].split(",")
@@ -41,7 +41,7 @@ artifact_panel.write("Chromosome\tpos\tvariant_type")
 for caller in callers:
     artifact_panel.write("\t" + caller)
 artifact_panel.write("\n")
-for key in FFPE_call_dict :
+for key in FFPE_call_dict:
     chrom = key.split("_")[0]
     pos = key.split("_")[1]
     variant_type = key.split("_")[2]

@@ -32,7 +32,7 @@ create_read_count_panel_of_normals:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
 msisensor_pro_scan:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/msisensor_pro:1.2.0"
 
 msisensor_pro_baseline:
-  container: "docker://gmsuppsala/somatic:develop"
+  container: "docker://hydragenetics/msisensor_pro:1.2.0"
