@@ -120,3 +120,17 @@ properties:
       extra:
         type: string
         description: extra parameters sent to msisensor_pro_baseline
+
+  create_background_file:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  create_artifact_file:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container

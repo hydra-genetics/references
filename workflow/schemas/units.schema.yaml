@@ -27,7 +27,7 @@ properties:
     description: absolute path to bam file
   vcf:
     type: string
-    description: absolute path to vcf file
+    description: bsolute path to merged vcf files from different callers
   gvcf:
     type: string
     description: absolute path to gvcf file

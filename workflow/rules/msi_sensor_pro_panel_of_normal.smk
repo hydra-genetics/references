@@ -27,7 +27,7 @@ rule msisensor_pro_input_file:
     input:
         bams=get_bams(units),
     output:
-        PoN_list="references/msisensor_pro_input_file/configure.txt",
+        PoN_list=temp("references/msisensor_pro_input_file/configure.txt"),
     log:
         "references/msisensor_pro_input_file/design.preprocessed.interval_list.log",
     conda:

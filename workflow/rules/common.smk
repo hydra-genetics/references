@@ -91,7 +91,19 @@ def get_gvcfs(units: pandas.DataFrame) -> typing.List[str]:
     Returns:
         List of strings with all gvcf file names and path
     """
-    return [unit.gvcf for unit in units.itertuples()]
+    return list(set([unit.gvcf for unit in units.itertuples()]))
+
+
+def get_vcfs(units: pandas.DataFrame) -> typing.List[str]:
+    """
+    function used to extract all vcf files found in units.tsv
+    Args:
+        units: DataFrame generate by importing a file following schema defintion
+               found in pre-alignment/workflow/schemas/units.schema.tsv
+    Returns:
+        List of strings with all vcf file names and path
+    """
+    return list(set([unit.vcf for unit in units.itertuples()]))
 
 
 wildcard_constraints:
@@ -105,4 +117,5 @@ def compile_output_list(wildcards):
         "references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5",
         "references/msisensor_pro_baseline/Msisensor_pro_reference.list_baseline",
         "references/create_background_file/background_panel.tsv",
+        "references/create_artifact_file/artifact_panel.tsv",
     ]

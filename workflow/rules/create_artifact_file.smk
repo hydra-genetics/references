@@ -12,12 +12,14 @@ rule create_artifact_file:
     input:
         vcfs=get_vcfs(units),
     output:
-        bed=temp("references/cnvkit_create_targets/cnvkit_manifest.target.bed"),
+        artifact_panel="references/create_artifact_file/artifact_panel.tsv",
+    params:
+        callers=["vardict", "mutect2", "freebayes", "varscan"],
     log:
-        "references/cnvkit_create_targets/cnvkit_create_targets.log",
+        "references/create_artifact_file/create_artifact_file.log",
     conda:
-        "../envs/cnvkit_panel_of_normal.yaml"
+        "../envs/create_artifact_file.yaml"
     container:
         config.get("cnvkit_create_targets", {}).get("container", config["default_container"])
-    shell:
-        "(cnvkit.py target --split {input.bed} -o {output.bed}) &> {log}"
+    script:
+        "../scripts/create_artifact_file.py"
