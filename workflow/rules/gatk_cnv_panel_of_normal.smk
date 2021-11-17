@@ -48,7 +48,7 @@ rule preprocess_intervals:
 
 rule collect_read_counts:
     input:
-        bam=lambda wildcards: get_units2(units, wildcards)[0].bam,
+        bam=lambda wildcards: get_units(units, wildcards)[0].bam,
         bai=lambda wildcards: "%s.bai" % get_units2(units, wildcards)[0].bam,
         interval="references/preprocess_intervals/%s.preprocessed.interval_list"
         % config["reference"]["design_bedfile"].split("/")[-1],
