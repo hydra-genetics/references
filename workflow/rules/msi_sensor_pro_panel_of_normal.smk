@@ -48,7 +48,7 @@ rule msisensor_pro_baseline:
         extra=config.get("collect_read_counts", {}).get("extra", "-c 50"),  # -c = minimal coverage, WXS: 20; WGS: 15
         outdir=lambda wildcards, output: os.path.dirname(os.path.abspath(output.PoN_list)),
     log:
-        "references/msisensor_pro_baseline/design.preprocessed.interval_list.log",
+        "references/msisensor_pro_baseline/msisensor_pro_baseline.log",
     conda:
         "../envs/msi_sensor_pro_panel_of_normal.yaml"
     container:
