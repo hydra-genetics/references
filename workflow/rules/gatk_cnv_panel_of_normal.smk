@@ -80,7 +80,7 @@ rule create_read_count_panel_of_normals:
         extra=config.get("create_read_count_panel_of_normals", {}).get("extra", ""),
         input=lambda wildcards, input: " -I ".join(input.bams),
     log:
-        "references/create_read_count_panel_of_normals/GATK/gatk_cnv_panel_of_normal.hdf5.log",
+        "references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5.log",
     conda:
         "../envs/gatk_cnv_panel_of_normal.yaml"
     container:
