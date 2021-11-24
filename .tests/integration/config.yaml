@@ -2,4 +2,37 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://marrip/common:1.1.0"
+default_container: "docker://hydragenetics/common:0.0.1"
+
+reference:
+  fasta:  "reference/HES45.fna"
+  dict: "reference/HES45.dict"
+  design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
+  mappability: "reference/access-5k-mappable.hg19.bed"
+
+cnvkit_create_targets:
+  container: "docker://gmsuppsala/somatic:develop"
+
+cnvkit_create_anti_targets:
+  container: "docker://gmsuppsala/somatic:develop"
+
+cnvkit_build_normal_reference:
+  container: "docker://gmsuppsala/somatic:develop"
+
+bed_to_interval_list:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+preprocess_intervals:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+collect_read_counts:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+create_read_count_panel_of_normals:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+msisensor_pro_scan:
+  container: "docker://hydragenetics/msisensor_pro:1.2.0"
+
+msisensor_pro_baseline:
+  container: "docker://hydragenetics/msisensor_pro:1.2.0"

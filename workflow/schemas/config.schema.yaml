@@ -12,8 +12,125 @@ properties:
   default_container:
     type: string
     description: name or path to a default docker/singularity container
+  reference:
+    type: object
+    properties:
+      fasta:
+        type: string
+        description: path to fasta reference file
+      mappability:
+        type: string
+        description: path to fasta mappability file
   required:
     - samples
     - units
     - resources
     - default_container
+
+  cnvkit_create_targets:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  cnvkit_create_anti_targets:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  cnvkit_build_normal_reference:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      mappability:
+        type: string
+        description: file with mappability information
+      extra:
+        type: string
+        description: extra parameters sent to cnvkit_build_normal_reference
+
+  bed_to_interval_list:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  preprocess_intervals:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      bin_length:
+        type: string
+        description: size of bin regions (WGS 1000, Exomes/target 0)
+      padding:
+        type: string
+        description: bases added to design regions (WGS 0, Exomes/target 250)
+      extra:
+        type: string
+        description: extra parameters sent to preprocess_intervals (-imr OVERLAPPING_ONLY)
+
+  collect_read_counts:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to collect_read_counts (needs -imr OVERLAPPING_ONLY)
+
+  create_read_count_panel_of_normals:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to create_read_count_panel_of_normals
+
+  msisensor_pro_scan:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  msisensor_pro_input_file:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  msisensor_pro_baseline:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to msisensor_pro_baseline
+
+  create_background_file:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  create_artifact_file:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
