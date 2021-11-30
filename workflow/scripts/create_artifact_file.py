@@ -9,6 +9,7 @@ callers = snakemake.params.callers
 
 FFPE_call_dict = {}
 for file_name in vcf_files:
+    FFPE_rm_dup_dict = {}
     with gzip.open(file_name, 'rt') as infile:
         file_content = infile.read().split("\n")
         header = True
@@ -34,8 +35,14 @@ for file_name in vcf_files:
                 FFPE_call_dict[key] = {}
                 for caller in callers:
                     FFPE_call_dict[key][caller] = 0
+            if key not in FFPE_rm_dup_dict:
+                FFPE_rm_dup_dict[key] = {}
+                for caller in callers:
+                    FFPE_rm_dup_dict[key][caller] = 0
             for position_caller in position_callers:
-                FFPE_call_dict[key][position_caller] += 1
+                if FFPE_rm_dup_dict[key][position_caller] == 0:
+                    FFPE_call_dict[key][position_caller] += 1
+                    FFPE_rm_dup_dict[key][position_caller] += 1
 
 artifact_panel.write("Chromosome\tpos\tvariant_type")
 for caller in callers:
