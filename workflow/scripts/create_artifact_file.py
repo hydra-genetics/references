@@ -29,6 +29,8 @@ for file_name in vcf_files:
             if len(ref) > 1 or len(alt) > 1:
                 variant_type = "INDEL"
             INFO = columns[7]
+            if INFO[0:3] == "AA=" :
+                continue
             position_callers = INFO.split("CALLERS=")[1].split(";")[0].split(",")
             key = chrom + "_" + str(pos) + "_" + variant_type
             if key not in FFPE_call_dict:
