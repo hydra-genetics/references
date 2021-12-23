@@ -134,3 +134,8 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      callers:
+        type: array
+        items:
+            type: string
+        description: list of variant callers to include
