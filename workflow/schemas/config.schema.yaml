@@ -134,3 +134,20 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+
+  svdb_build:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  svdb_export:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to svdb_export

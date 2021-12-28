@@ -36,3 +36,9 @@ msisensor_pro_scan:
 
 msisensor_pro_baseline:
   container: "docker://hydragenetics/msisensor_pro:1.2.0"
+
+svdb_build:
+  container: "docker://hydragenetics/svdb:2.5.0"
+
+svdb_export:
+  container: "docker://hydragenetics/svdb:2.5.0"
