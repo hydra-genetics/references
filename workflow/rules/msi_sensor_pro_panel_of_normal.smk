@@ -49,6 +49,10 @@ rule msisensor_pro_baseline:
         outdir=lambda wildcards, output: os.path.dirname(os.path.abspath(output.PoN_list)),
     log:
         "references/msisensor_pro_baseline/msisensor_pro_baseline.log",
+    threads: config.get("msisensor_pro_baseline", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("msisensor_pro_baseline", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("msisensor_pro_baseline", {}).get("time", config["default_resources"]["time"]),
     conda:
         "../envs/msi_sensor_pro_panel_of_normal.yaml"
     container:

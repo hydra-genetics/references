@@ -62,7 +62,10 @@ rule cnvkit_build_normal_reference:
         extra=config.get("cnvkit_build_normal_reference", {}).get("extra", ""),
     log:
         "references/cnvkit_build_normal_reference/cnvkit_build_normal_reference.log",
-    threads: 4
+    threads: config.get("cnvkit_build_normal_reference", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("cnvkit_build_normal_reference", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_build_normal_reference", {}).get("time", config["default_resources"]["time"]),
     conda:
         "../envs/cnvkit_panel_of_normal.yaml"
     container:
