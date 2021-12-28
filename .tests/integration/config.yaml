@@ -10,6 +10,17 @@ reference:
   design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
   mappability: "reference/access-5k-mappable.hg19.bed"
 
+create_artifact_file:
+  container: "docker://hydragenetics/common:0.0.1"
+  callers:
+    - "vardict"
+    - "mutect2"
+    - "varscan"
+    - "freebayes"
+
+create_background_file:
+  container: "docker://hydragenetics/common:0.0.1"
+
 cnvkit_create_targets:
   container: "docker://gmsuppsala/somatic:develop"
 
