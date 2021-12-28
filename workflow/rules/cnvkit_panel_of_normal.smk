@@ -46,7 +46,7 @@ rule cnvkit_build_normal_reference:
         ref=config["reference"]["fasta"],
         mappability=config["reference"]["mappability"],
     output:
-        PoN="references/cnvkit_build_normal_reference/cnvkit.PoN.cnn",
+        PoN=temp("references/cnvkit_build_normal_reference/cnvkit.PoN.cnn"),
         tmp_bed=temp("cnvkit_manifest.target.target.bed"),
         tmp_target_cov=temp(
             ["%s_%s.targetcoverage.cnn" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]

@@ -29,7 +29,10 @@ rule preprocess_intervals:
         ref=config["reference"]["fasta"],
         intervalList="references/bed_to_interval_list/%s.interval_list" % config["reference"]["design_bedfile"].split("/")[-1],
     output:
-        "references/preprocess_intervals/%s.preprocessed.interval_list" % config["reference"]["design_bedfile"].split("/")[-1],
+        temp(
+            "references/preprocess_intervals/%s.preprocessed.interval_list"
+            % config["reference"]["design_bedfile"].split("/")[-1]
+        ),
     params:
         bin_length=config.get("preprocess_intervals", {}).get("bin_length", "0"),  # WGS 1000 Exomes/target: 0
         padding=config.get("preprocess_intervals", {}).get("padding", "250"),  # WGS 0 Exomes/target: 250
@@ -75,7 +78,7 @@ rule create_read_count_panel_of_normals:
             for t in get_unit_types(units, sample)
         ],
     output:
-        "references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5",
+        temp("references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5"),
     params:
         extra=config.get("create_read_count_panel_of_normals", {}).get("extra", ""),
         input=lambda wildcards, input: " -I ".join(input.bams),

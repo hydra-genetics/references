@@ -12,7 +12,7 @@ rule create_background_file:
     input:
         gvcfs=get_gvcfs(units),
     output:
-        background_file="references/create_background_file/background_panel.tsv",
+        background_file=temp("references/create_background_file/background_panel.tsv"),
     log:
         "references/create_background_file/create_background_file.log",
     conda:
