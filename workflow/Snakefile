@@ -13,6 +13,7 @@ include: "rules/gatk_cnv_panel_of_normal.smk"
 include: "rules/msi_sensor_pro_panel_of_normal.smk"
 include: "rules/create_background_file.smk"
 include: "rules/create_artifact_file.smk"
+include: "rules/svdb_cnv_db.smk"
 
 
 report: "report/workflow.rst"

@@ -12,7 +12,7 @@ rule create_artifact_file:
     input:
         vcfs=get_vcfs(units),
     output:
-        artifact_panel="references/create_artifact_file/artifact_panel.tsv",
+        artifact_panel=temp("references/create_artifact_file/artifact_panel.tsv"),
     params:
         callers=config.get("create_artifact_file", {}).get("callers", ["vardict", "mutect2"]),
     log:

@@ -46,7 +46,7 @@ rule cnvkit_build_normal_reference:
         ref=config["reference"]["fasta"],
         mappability=config["reference"]["mappability"],
     output:
-        PoN="references/cnvkit_build_normal_reference/cnvkit.PoN.cnn",
+        PoN=temp("references/cnvkit_build_normal_reference/cnvkit.PoN.cnn"),
         tmp_bed=temp("cnvkit_manifest.target.target.bed"),
         tmp_target_cov=temp(
             ["%s_%s.targetcoverage.cnn" % (sample, t) for sample in get_samples(samples) for t in get_unit_types(units, sample)]
@@ -62,7 +62,10 @@ rule cnvkit_build_normal_reference:
         extra=config.get("cnvkit_build_normal_reference", {}).get("extra", ""),
     log:
         "references/cnvkit_build_normal_reference/cnvkit_build_normal_reference.log",
-    threads: 4
+    threads: config.get("cnvkit_build_normal_reference", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("cnvkit_build_normal_reference", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("cnvkit_build_normal_reference", {}).get("time", config["default_resources"]["time"]),
     conda:
         "../envs/cnvkit_panel_of_normal.yaml"
     container:

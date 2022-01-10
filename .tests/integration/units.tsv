@@ -1,5 +1,5 @@
-sample	type	bam	vcf	gvcf
-HD832.HES45	T	alignment/merged_bam/HD832.HES45_T.bam	reference/HD832.HES45_T.ensembled.vcf.gz	reference/HD832.small1.gvcf.gz
-HD832.HES45	T	alignment/merged_bam/HD832.HES45_T.bam	reference/HD832.HES45_T.ensembled.vcf.gz	reference/HD832.small2.gvcf.gz
-HD832.HES45	T	alignment/merged_bam/HD832.HES45_T.bam	reference/HD832.HES45_T.ensembled.vcf.gz	reference/HD832.small3.gvcf.gz
-HD832.HES45	T	alignment/merged_bam/HD832.HES45_T.bam	reference/HD832.HES45_T.ensembled.vcf.gz	reference/HD827.small.gvcf.gz
+sample	type	bam	vcf	gvcf	cnv_vcf
+HD832.HES45	T	alignment/merged_bam/HD832.HES45_T.bam	reference/HD832.HES45_T.ensembled.vcf.gz	reference/HD832.small1.gvcf.gz	reference/HD832_T.merged1.vcf
+HD832.HES45	T	alignment/merged_bam/HD832.HES45_T.bam	reference/HD832.HES45_T.ensembled.vcf.gz	reference/HD832.small2.gvcf.gz	reference/HD832_T.merged2.vcf
+HD832.HES45	T	alignment/merged_bam/HD832.HES45_T.bam	reference/HD832.HES45_T.ensembled.vcf.gz	reference/HD832.small3.gvcf.gz	reference/HD832_T.merged3.vcf
+HD832.HES45	T	alignment/merged_bam/HD832.HES45_T.bam	reference/HD832.HES45_T.ensembled.vcf.gz	reference/HD827.small.gvcf.gz	reference/HD832_T.merged4.vcf

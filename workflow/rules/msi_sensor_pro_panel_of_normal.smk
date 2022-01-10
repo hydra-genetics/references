@@ -43,12 +43,16 @@ rule msisensor_pro_baseline:
         bam_conf="references/msisensor_pro_input_file/configure.txt",
         PoN_list="references/msisensor_pro_scan/Msisensor_pro_reference.list",
     output:
-        PoN_list="references/msisensor_pro_baseline/Msisensor_pro_reference.list_baseline",
+        PoN_list=temp("references/msisensor_pro_baseline/Msisensor_pro_reference.list_baseline"),
     params:
         extra=config.get("collect_read_counts", {}).get("extra", "-c 50"),  # -c = minimal coverage, WXS: 20; WGS: 15
         outdir=lambda wildcards, output: os.path.dirname(os.path.abspath(output.PoN_list)),
     log:
         "references/msisensor_pro_baseline/msisensor_pro_baseline.log",
+    threads: config.get("msisensor_pro_baseline", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        threads=config.get("msisensor_pro_baseline", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("msisensor_pro_baseline", {}).get("time", config["default_resources"]["time"]),
     conda:
         "../envs/msi_sensor_pro_panel_of_normal.yaml"
     container:
