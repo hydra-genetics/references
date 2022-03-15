@@ -33,7 +33,7 @@ for file_name in vcf_files:
                 continue
             callers = INFO.split("CALLERS=")[1].split(";")[0].split(",")
             AF = INFO.split(";AF=")
-            if len(AF) == 1 :
+            if len(AF) == 1:
                 AF = INFO.split("AF=")
             AF = float(AF[0])
             key = chrom + "_" + str(pos) + "_" + variant_type
