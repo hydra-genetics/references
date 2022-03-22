@@ -64,7 +64,7 @@ for key in FFPE_call_dict:
     for caller in callers:
         if caller not in FFPE_call_dict[key]:
             artifact_panel.write("\t0\t0\t1000")
-        else :
+        else:
             FFPE_call_dict[key][caller][1].sort()
             median_af = statistics.median(FFPE_call_dict[key][caller][1])
             sd_af = 1000
