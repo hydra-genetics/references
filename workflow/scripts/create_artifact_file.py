@@ -35,7 +35,7 @@ for file_name in vcf_files:
             AF = INFO.split(";AF=")
             if len(AF) == 1:
                 AF = INFO.split("AF=")
-            AF = float(AF[0])
+            AF = float(AF[1].split(";")[0])
             key = chrom + "_" + str(pos) + "_" + variant_type
             if key not in FFPE_call_dict:
                 FFPE_call_dict[key] = {}
@@ -62,14 +62,17 @@ for key in FFPE_call_dict:
     variant_type = key.split("_")[2]
     artifact_panel.write(chrom + "\t" + pos + "\t" + variant_type)
     for caller in callers:
-        FFPE_call_dict[key][caller][1].sort()
-        median_af = statistics.median(FFPE_call_dict[key][caller][1])
-        sd_af = 1000
-        nr_obs = len(FFPE_call_dict[key][caller][1])
-        if nr_obs >= 4:
-            '''This is the sample variance s² with Bessel’s correction, also known as variance with N-1 degrees of freedom.
-            Provided that the data points are representative (e.g. independent and identically distributed),
-            the result should be an unbiased estimate of the true population variance.'''
-            sd_af = statistics.stdev(FFPE_call_dict[key][caller][1])
-        artifact_panel.write("\t" + str(FFPE_call_dict[key][caller]) + "\t" + str(median_af) + "\t" + str(sd_af))
-    artifact_panel.write("\n")
+        if caller not in FFPE_call_dict[key]:
+            artifact_panel.write("\t0\t0\t1000")
+        else:
+            FFPE_call_dict[key][caller][1].sort()
+            median_af = statistics.median(FFPE_call_dict[key][caller][1])
+            sd_af = 1000
+            nr_obs = len(FFPE_call_dict[key][caller][1])
+            if nr_obs >= 4:
+                '''This is the sample variance s² with Bessel’s correction, also known as variance with N-1 degrees of freedom.
+                Provided that the data points are representative (e.g. independent and identically distributed),
+                the result should be an unbiased estimate of the true population variance.'''
+                sd_af = statistics.stdev(FFPE_call_dict[key][caller][1])
+            artifact_panel.write("\t" + str(FFPE_call_dict[key][caller]) + "\t" + str(median_af) + "\t" + str(sd_af))
+        artifact_panel.write("\n")
