@@ -35,7 +35,7 @@ for file_name in vcf_files:
             AF = INFO.split(";AF=")
             if len(AF) == 1:
                 AF = INFO.split("AF=")
-            AF = float(AF[0])
+            AF = float(AF.split(";")[0])
             key = chrom + "_" + str(pos) + "_" + variant_type
             if key not in FFPE_call_dict:
                 FFPE_call_dict[key] = {}
