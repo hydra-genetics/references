@@ -45,6 +45,10 @@ for file_name in vcf_files:
                 FFPE_rm_dup_dict[key] = {}
                 for caller in callers:
                     FFPE_rm_dup_dict[key][caller] = 0
+            else:
+                for caller in callers:
+                    if caller not in FFPE_rm_dup_dict[key]:
+                        FFPE_rm_dup_dict[key][caller] = 0
             for caller in callers:
                 if FFPE_rm_dup_dict[key][caller] == 0:
                     FFPE_rm_dup_dict[key][caller] += 1
