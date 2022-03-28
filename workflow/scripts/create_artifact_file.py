@@ -29,7 +29,7 @@ for file_name in vcf_files:
             if len(ref) > 1 or len(alt) > 1:
                 variant_type = "INDEL"
             INFO = columns[7]
-            if INFO[0:3] == "AA=":
+            if INFO.find("AA=") != -1:
                 continue
             callers = INFO.split("CALLERS=")[1].split(";")[0].split(",")
             AF = INFO.split(";AF=")
