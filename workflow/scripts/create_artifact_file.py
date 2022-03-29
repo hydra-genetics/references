@@ -29,7 +29,7 @@ for file_name in vcf_files:
             if len(ref) > 1 or len(alt) > 1:
                 variant_type = "INDEL"
             INFO = columns[7]
-            if INFO[0:3] == "AA=":
+            if INFO.find("AA=") != -1:
                 continue
             callers = INFO.split("CALLERS=")[1].split(";")[0].split(",")
             AF = INFO.split(";AF=")
@@ -41,10 +41,18 @@ for file_name in vcf_files:
                 FFPE_call_dict[key] = {}
                 for caller in callers:
                     FFPE_call_dict[key][caller] = [0, []]
+            else:
+                for caller in callers:
+                    if caller not in FFPE_call_dict[key]:
+                        FFPE_call_dict[key][caller] = [0, []]
             if key not in FFPE_rm_dup_dict:
                 FFPE_rm_dup_dict[key] = {}
                 for caller in callers:
                     FFPE_rm_dup_dict[key][caller] = 0
+            else:
+                for caller in callers:
+                    if caller not in FFPE_rm_dup_dict[key]:
+                        FFPE_rm_dup_dict[key][caller] = 0
             for caller in callers:
                 if FFPE_rm_dup_dict[key][caller] == 0:
                     FFPE_rm_dup_dict[key][caller] += 1
