@@ -5,7 +5,7 @@ import sys
 
 vcf_files = snakemake.input.vcfs
 artifact_panel = open(snakemake.output.artifact_panel, "w")
-callers = snakemake.params.callers
+callers_used = snakemake.params.callers
 
 FFPE_call_dict = {}
 for file_name in vcf_files:
@@ -61,7 +61,7 @@ for file_name in vcf_files:
 
 
 artifact_panel.write("Chromosome\tpos\tvariant_type")
-for caller in callers:
+for caller in callers_used:
     artifact_panel.write("\t" + caller + "\tmedian_MAF\tsd_MAF")
 artifact_panel.write("\n")
 for key in FFPE_call_dict:
@@ -69,7 +69,7 @@ for key in FFPE_call_dict:
     pos = key.split("_")[1]
     variant_type = key.split("_")[2]
     artifact_panel.write(chrom + "\t" + pos + "\t" + variant_type)
-    for caller in callers:
+    for caller in callers_used:
         if caller not in FFPE_call_dict[key]:
             artifact_panel.write("\t0\t0\t1000")
         else:
@@ -82,5 +82,5 @@ for key in FFPE_call_dict:
                 Provided that the data points are representative (e.g. independent and identically distributed),
                 the result should be an unbiased estimate of the true population variance.'''
                 sd_af = statistics.stdev(FFPE_call_dict[key][caller][1])
-            artifact_panel.write("\t" + str(FFPE_call_dict[key][caller]) + "\t" + str(median_af) + "\t" + str(sd_af))
+            artifact_panel.write("\t" + str(FFPE_call_dict[key][caller[0]]) + "\t" + str(median_af) + "\t" + str(sd_af))
         artifact_panel.write("\n")
