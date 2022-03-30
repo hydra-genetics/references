@@ -83,4 +83,4 @@ for key in FFPE_call_dict:
                 the result should be an unbiased estimate of the true population variance.'''
                 sd_af = statistics.stdev(FFPE_call_dict[key][caller][1])
             artifact_panel.write("\t" + str(FFPE_call_dict[key][caller][0]) + "\t" + str(median_af) + "\t" + str(sd_af))
-        artifact_panel.write("\n")
+    artifact_panel.write("\n")
