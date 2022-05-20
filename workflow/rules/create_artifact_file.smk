@@ -14,7 +14,7 @@ rule create_artifact_file:
     output:
         artifact_panel=temp("references/create_artifact_file/artifact_panel.tsv"),
     params:
-        callers=config.get("create_artifact_file", {}).get("callers", ["vardict", "mutect2"]),
+        callers=config.get("create_artifact_file", {}).get("callers", ["vardict", "gatk_mutect2"]),
     log:
         "references/create_artifact_file/create_artifact_file.log",
     conda:
