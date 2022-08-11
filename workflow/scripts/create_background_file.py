@@ -5,8 +5,8 @@ import sys
 
 gvcf_files = snakemake.input.gvcfs
 background_file = open(snakemake.output.background_file, "w")
-min_dp = snakemake.input.min_dp
-max_af = snakemake.input.max_af
+min_dp = snakemake.params.min_dp
+max_af = snakemake.params.max_af
 
 background_dict = {}
 
