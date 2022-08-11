@@ -13,6 +13,9 @@ rule create_background_file:
         gvcfs=get_gvcfs(units),
     output:
         background_file=temp("references/create_background_file/background_panel.tsv"),
+    params:
+        min_dp=config.get("create_artifact_file", {}).get("min_dp", 500),
+        max_af=config.get("create_artifact_file", {}).get("max_af", 0.015),
     log:
         "references/create_background_file/create_background_file.log",
     conda:
