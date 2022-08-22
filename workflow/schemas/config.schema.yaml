@@ -127,6 +127,12 @@ properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      min_dp:
+        type: integer
+        description: min depth to be inculded in the background calculation
+      max_af:
+        type: float
+        description: max variant allele freuqency to be inculded in the background calculation
 
   create_artifact_file:
     type: object
@@ -139,7 +145,7 @@ properties:
         items:
             type: string
         description: list of variant callers to include
-        
+
   svdb_build:
     type: object
     properties:

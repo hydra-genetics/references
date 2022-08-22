@@ -5,6 +5,8 @@ import sys
 
 gvcf_files = snakemake.input.gvcfs
 background_file = open(snakemake.output.background_file, "w")
+min_dp = snakemake.params.min_dp
+max_af = snakemake.params.max_af
 
 background_dict = {}
 
@@ -37,11 +39,11 @@ for file_name in gvcf_files:
                 alt_AD += int(AD)
             DP = ref_AD + alt_AD
             alt_AF = 0.0
-            if DP > 50:
+            if DP > min_dp:
                 alt_AF = alt_AD / float(DP)
-            if alt_AF > 0.95:
-                alt_AF = 1.0 - alt_AF
-            if alt_AF > 0.05:
+            if alt_AF > 1 - max_af:
+                alt_AF = 1 - alt_AF
+            if alt_AF > max_af:
                 continue
             if key in background_dict:
                 background_dict[key].append(alt_AF)
