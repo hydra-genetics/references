@@ -54,7 +54,7 @@ def get_bams(units: pandas.DataFrame) -> typing.List[str]:
 
 def get_coverage_files(sample, units):
     coverage_list = [
-        "cnv_sv/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
+        "references/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
     ]
