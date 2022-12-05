@@ -38,7 +38,7 @@ rule purecn_coverage:
         bam_list_file="references/purecn_bam_list/bam_files.list",
     output:
         expand(
-            "cnv_sv/purecn_coverage/{{sample}}_{{type}}{ext}",
+            "references/purecn_coverage/{{sample}}_{{type}}{ext}",
             ext=[
                 "_coverage.txt.gz",
                 "_coverage_loess.txt.gz",
