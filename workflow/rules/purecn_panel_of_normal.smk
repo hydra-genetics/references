@@ -110,7 +110,7 @@ rule purecn_coverage_list:
 rule bcftools_merge:
     input:
         vcfs=get_vcfs(units),
-        vcfs_tabix=expand("{dataset}/a.{ext}", dataset=vcfs, ext=[".tbi"]),
+        vcfs_tabix=expand("{dataset}/a.{ext}", dataset=get_vcfs(units), ext=[".tbi"]),
     output:
         normal_vcf="references/bcftools_merge/normal_db.vcf",
     params:
