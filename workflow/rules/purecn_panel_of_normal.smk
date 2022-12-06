@@ -148,7 +148,8 @@ rule bcftools_merge:
 rule purecn_normal_db:
     input:
         coverage_list_file="references/purecn_coverage_list/coverage_files.list",
-        normal_vcf="references/bcftools_merge/normal_db.vcf",
+        normal_vcf="references/bcftools_merge/normal_db.vcf.gz",
+        normal_vcf_tbi="references/bcftools_merge/normal_db.vcf.gz.tbi",
     output:
         normal_db="references/purecn_normal_db/output/normal_db.rds",
         out_dir=directory("references/purecn_normal_db/output/"),
