@@ -151,7 +151,7 @@ rule purecn_normal_db:
         normal_vcf="references/bcftools_merge/normal_db.vcf.gz",
         normal_vcf_tbi="references/bcftools_merge/normal_db.vcf.gz.tbi",
     output:
-        normal_db="references/purecn_normal_db/output/mapping_bias_hg19.rds",
+        normal_db="references/purecn_normal_db/output/normalDB_hg19.rds",
         out_dir=directory("references/purecn_normal_db/output/"),
     params:
         genome=config.get("purecn_normal_db", {}).get("genome", "hg19"),
