@@ -112,7 +112,7 @@ rule bcftools_merge:
         vcfs=get_vcfs(units),
         vcfs_tabix=expand("{dataset}.{ext}", dataset=get_vcfs(units), ext=["tbi"]),
     output:
-        normal_vcf="references/bcftools_merge/normal_db.vcf",
+        normal_vcf="references/bcftools_merge/normal_db.vcf.gz",
     params:
         output_type=config.get("bcftools_merge", {}).get("output_type", "z"),
         info_rules=config.get("bcftools_merge", {}).get("output_type", "-"),
