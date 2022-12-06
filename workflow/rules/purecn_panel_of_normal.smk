@@ -150,8 +150,8 @@ rule purecn_normal_db:
         coverage_list_file="references/purecn_coverage_list/coverage_files.list",
         normal_vcf="references/bcftools_merge/normal_db.vcf",
     output:
-        normal_db="references/purecn_normal_db/normal_db.rds",
-        out_dir=directory("references/purecn_normal_db/"),
+        normal_db="references/purecn_normal_db/output/normal_db.rds",
+        out_dir=directory("references/purecn_normal_db/output/"),
     params:
         genome=config.get("purecn_normal_db", {}).get("genome", "hg19"),
     log:

@@ -52,7 +52,7 @@ def get_bams(units: pandas.DataFrame) -> typing.List[str]:
     return list(set([unit.bam for unit in units.itertuples()]))
 
 
-def get_coverage_files(sample, units):
+def get_coverage_files(samples, units):
     coverage_list = [
         "references/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
         for sample in get_samples(samples)
@@ -110,5 +110,5 @@ def compile_output_list(wildcards):
         "references/create_background_file/background_panel.tsv",
         "references/create_artifact_file/artifact_panel.tsv",
         "references/svdb_export/svdb_cnv.vcf",
-        "references/purecn_normal_db/normal_db.rds",
+        "references/purecn_normal_db/output/normal_db.rds",
     ]
