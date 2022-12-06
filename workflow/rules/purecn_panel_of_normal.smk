@@ -176,7 +176,7 @@ rule purecn_normal_db:
         "{rule}: calculate normal DB for purecn"
     shell:
         "(Rscript $PURECN/NormalDB.R "
-        "-out-dir {output.out_dir} "
+        "--out-dir {output.out_dir} "
         "--coverage-files {input.coverage_list_file} "
         "--normal-panel {input.normal_vcf} "
         "--genome {params.genome}) &> {log}"
