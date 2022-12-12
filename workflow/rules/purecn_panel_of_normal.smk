@@ -9,8 +9,8 @@ rule purecn_interval_file:
         ref_fasta=config.get("reference", {}).get("fasta", ""),
         design_bed=config.get("reference", {}).get("design_bed", ""),
     output:
-        intervals_file=temp(f"references/purecn_interval_file/targets_intervals.txt"),
-        optimized_bed=temp(f"references/purecn_interval_file/targets_optimized.bed"),
+        intervals_file=temp("references/purecn_interval_file/targets_intervals.txt"),
+        optimized_bed=temp("references/purecn_interval_file/targets_optimized.bed"),
     params:
         genome=config.get("purecn_interval_file", {}).get("genome", "hg19"),
         average_off_target_width=config.get("purecn_interval_file", {}).get("average_off_target_width", "25000"),
@@ -192,6 +192,7 @@ rule purecn_normal_db:
         normal_vcf_tbi="references/bcftools_merge/normal_db.vcf.gz.tbi",
     output:
         normal_db="references/purecn_normal_db/output/normalDB_hg19.rds",
+        mapping_bias="references/purecn_normal_db/output/mapping_bias_hg19.rds",
         out_dir=directory("references/purecn_normal_db/output/"),
     params:
         genome=config.get("purecn_normal_db", {}).get("genome", "hg19"),
