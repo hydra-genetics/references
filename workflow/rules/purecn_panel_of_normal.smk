@@ -4,6 +4,46 @@ __email__ = "jonas.almlöf@scilifelab.uu.se"
 __license__ = "GPL3"
 
 
+rule purecn_interval_file:
+    input:
+        ref_fasta=config.get("reference", {}).get("fasta", ""),
+        design_bed=config.get("reference", {}).get("design_bed", ""),
+    output:
+        intervals_file=temp(f"references/purecn_interval_file/targets_intervals.txt"),
+        optimized_bed=temp(f"references/purecn_interval_file/targets_optimized.bed"),
+    params:
+        genome=config.get("purecn_interval_file", {}).get("genome", "hg19"),
+        average_off_target_width=config.get("purecn_interval_file", {}).get("average_off_target_width", "25000"),
+    log: "references/purecn_interval_file/targets.log",
+    benchmark:
+        repeat(
+            "references/purecn_interval_file/targets.benchmark.tsv",
+            config.get("purecn_interval_file", {}).get("benchmark_repeats", 1),
+        )
+    threads: config.get("purecn_interval_file", {}).get("threads", config["default_resources"]["threads"])
+    resources:
+        mem_mb=config.get("purecn_interval_file", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
+        mem_per_cpu=config.get("purecn_interval_file", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        partition=config.get("purecn_interval_file", {}).get("partition", config["default_resources"]["partition"]),
+        threads=config.get("purecn_interval_file", {}).get("threads", config["default_resources"]["threads"]),
+        time=config.get("purecn_interval_file", {}).get("time", config["default_resources"]["time"]),
+    container:
+        config.get("purecn_interval_file", {}).get("container", config["default_container"])
+    conda:
+        "../envs/purecn.yaml"
+    message:
+        "{rule}: make an interval file for purecn"
+    shell:
+        "(Rscript $PURECN/IntervalFile.R "
+        "--fasta {input.ref_fasta} "
+        "--in-file {input.design_bed} "
+        "--out-file {output.intervals_file} "
+        "--export {output.optimized_bed} "
+        "--genome {params.genome} "
+        "--average-off-target-width {params.average_off_target_width} "
+        "--off-target) &> {log}"
+
+
 rule purecn_bam_list:
     input:
         bam_list=get_bams(units),
