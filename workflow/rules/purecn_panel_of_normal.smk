@@ -14,7 +14,8 @@ rule purecn_interval_file:
     params:
         genome=config.get("purecn_interval_file", {}).get("genome", "hg19"),
         average_off_target_width=config.get("purecn_interval_file", {}).get("average_off_target_width", "25000"),
-    log: "references/purecn_interval_file/targets.log",
+    log:
+        "references/purecn_interval_file/targets.log",
     benchmark:
         repeat(
             "references/purecn_interval_file/targets.benchmark.tsv",
