@@ -38,7 +38,7 @@ rule bed_to_interval_list:
 rule preprocess_intervals:
     input:
         ref=config.get("reference", {}).get("fasta", ""),
-        intervalList="references/bed_to_interval_list/%s.interval_list" 
+        intervalList="references/bed_to_interval_list/%s.interval_list"
         % config.get("reference", {}).get("design_bed", "").split("/")[-1],
     output:
         temp(
