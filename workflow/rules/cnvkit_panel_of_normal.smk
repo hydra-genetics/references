@@ -6,7 +6,7 @@ __license__ = "GPL3"
 
 rule cnvkit_create_targets:
     input:
-        bed=config.get("reference", {}).get("design_bed", "")
+        bed=config.get("reference", {}).get("design_bed", ""),
     output:
         bed=temp("references/cnvkit_create_targets/cnvkit_manifest.target.bed"),
     log:
