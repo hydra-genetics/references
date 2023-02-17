@@ -4,13 +4,29 @@ type: object
 properties:
   default_resources:
     type: object
+    description: default resource definitions
     properties:
+      mem_mb:
+        type: integer
+        description: memory in MB used per cpu
+      mem_per_cpu:
+        type: integer
+        description: memory used per cpu
+      partition:
+        type: string
+        description: partition to use on cluster
       threads:
         type: integer
-        description: default number of threads that will be used by a rule
+        description: number of threads to be available
       time:
         type: string
-        description: default max execution time for a rule
+        description: max execution time
+    required:
+      - mem_mb
+      - mem_per_cpu
+      - partition
+      - threads
+      - time
 
   required:
     - default_resources

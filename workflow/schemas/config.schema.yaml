@@ -162,3 +162,69 @@ properties:
       extra:
         type: string
         description: extra parameters sent to svdb_export
+
+  purecn_interval_file:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      genome:
+        type: string
+        description: reference genome
+      average_off_target_width:
+        type: integer
+        description: average bin size of off-target regions
+
+  purecn_bam_list:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  purecn_coverage:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to purecn_coverage
+      intervals:
+        type: string
+        description: interval panel design file
+
+  purecn_coverage_list:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  bcftools_merge:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to bcftools_merge
+      info_rules:
+        type: string
+        description: option how bcftools should merge info in the vcf file
+      output_type:
+        type: string
+        description: output file zip option
+
+  purecn_normal_db:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      genome:
+        type: string
+        description: reference genome

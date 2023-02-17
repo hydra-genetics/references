@@ -8,7 +8,6 @@ reference:
   fasta:  "reference/HES45.fna"
   dict: "reference/HES45.dict"
   design_bed: "reference/twist_DNA_solid.chr1.annotated.bed"
-  design_bedfile: "reference/twist_DNA_solid.chr1.annotated.bed"
   mappability: "reference/access-5k-mappable.hg19.bed"
 
 create_artifact_file:
