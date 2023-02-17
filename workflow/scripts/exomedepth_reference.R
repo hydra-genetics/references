@@ -1,7 +1,8 @@
 library(ExomeDepth)
 
-bam_list <- read.delim(snakemake@input[["bam_list_file"]], header = FALSE)
-exons_bed <- read.csv(snakemake@input[["bed"]], header = FALSE, sep = "\t")
+bam_df <- read.delim(snakemake@input[["bam_list_file"]], header = FALSE)
+bam_list <- bam_df$V1
+exons_bed <- read.csv(snakemake@params[["bed"]], header = FALSE, sep = "\t")
 
 # Create counts dataframe for all BAMs
 my_counts <- getBamCounts(bed.frame = exons_bed,
@@ -10,5 +11,5 @@ my_counts <- getBamCounts(bed.frame = exons_bed,
 
 # prepare the main matrix of read count data
 refcount_mat <- as.matrix(
-    my.counts[, grep(names(my.counts), pattern = ".bam$")])
+    my_counts[, grep(names(my_counts), pattern = ".bam$")])
 save(refcount_mat, file = snakemake@output[["reference"]])
