@@ -34,5 +34,4 @@ jobs:
       - name: snakemake dry run
         working-directory: .tests/integration
         run: |
-          mamba install -c conda-forge -c bioconda snakemake singularity
           snakemake -n -s ../../workflow/Snakefile --configfile config.yaml
