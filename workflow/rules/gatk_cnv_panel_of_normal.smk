@@ -38,7 +38,8 @@ rule bed_to_interval_list:
 rule preprocess_intervals:
     input:
         ref=config.get("reference", {}).get("fasta", ""),
-        intervalList="references/bed_to_interval_list/%s.interval_list" % config.get("reference", {}).get("design_bed", "").split("/")[-1],
+        intervalList="references/bed_to_interval_list/%s.interval_list" 
+        % config.get("reference", {}).get("design_bed", "").split("/")[-1],
     output:
         temp(
             "references/preprocess_intervals/%s.preprocessed.interval_list"
@@ -131,8 +132,8 @@ rule create_read_count_panel_of_normals:
     threads: config.get("create_read_count_panel_of_normals", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("create_read_count_panel_of_normals", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get(
-            "create_read_count_panel_of_normals", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        mem_per_cpu=config.get("create_read_count_panel_of_normals", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
         ),
         partition=config.get("create_read_count_panel_of_normals", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("create_read_count_panel_of_normals", {}).get("threads", config["default_resources"]["threads"]),
