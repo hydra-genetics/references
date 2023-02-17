@@ -39,6 +39,9 @@ collect_read_counts:
 create_read_count_panel_of_normals:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
+exomedepth_reference:
+  container: "docker://hydragenetics/exomedepth:1.1.15"
+
 msisensor_pro_scan:
   container: "docker://hydragenetics/msisensor_pro:1.2.0"
 

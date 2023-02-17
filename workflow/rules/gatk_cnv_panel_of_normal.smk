@@ -9,9 +9,9 @@ __license__ = "GPL3"
 
 rule bed_to_interval_list:
     input:
-        bed=config["reference"]["design_bedfile"],
-        ref=config["reference"]["fasta"],
-        ref_dict=config["reference"]["dict"],
+        bed=config.get("reference", {}).get("design_bedfile", ""),
+        ref=config.get("reference", {}).get("fasta", ""),
+        ref_dict=config.get("reference", {}).get("dict", ""),
     output:
         temp("references/bed_to_interval_list/%s.interval_list" % config["reference"]["design_bedfile"].split("/")[-1]),
     log:
@@ -26,7 +26,7 @@ rule bed_to_interval_list:
 
 rule preprocess_intervals:
     input:
-        ref=config["reference"]["fasta"],
+        ref=config.get("reference", {}).get("fasta", ""),
         intervalList="references/bed_to_interval_list/%s.interval_list" % config["reference"]["design_bedfile"].split("/")[-1],
     output:
         temp(

@@ -10,7 +10,7 @@ __license__ = "GPL3"
 
 rule cnvkit_create_targets:
     input:
-        bed=config["reference"]["design_bedfile"],
+        bed=config.get("reference", {}).get("design_bedfile", ""),
     output:
         bed=temp("references/cnvkit_create_targets/cnvkit_manifest.target.bed"),
     log:
@@ -43,8 +43,8 @@ rule cnvkit_build_normal_reference:
         bams=get_bams(units),
         target="references/cnvkit_create_targets/cnvkit_manifest.target.bed",
         antitarget="references/cnvkit_create_anti_targets/cnvkit_manifest.antitarget.bed",
-        ref=config["reference"]["fasta"],
-        mappability=config["reference"]["mappability"],
+        ref=config.get("reference", {}).get("fasta", ""),
+        mappability=config.get("reference", {}).get("mappability", ""),
     output:
         PoN=temp("references/cnvkit_build_normal_reference/cnvkit.PoN.cnn"),
         tmp_bed=temp("cnvkit_manifest.target.target.bed"),

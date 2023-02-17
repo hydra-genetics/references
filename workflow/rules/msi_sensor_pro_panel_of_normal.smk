@@ -10,7 +10,7 @@ __license__ = "GPL3"
 
 rule msisensor_pro_scan:
     input:
-        ref=config["reference"]["fasta"],
+        ref=config.get("reference", {}).get("fasta", ""),
     output:
         PoN_list=temp("references/msisensor_pro_scan/Msisensor_pro_reference.list"),
     log:
