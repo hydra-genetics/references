@@ -94,9 +94,7 @@ rule cnvkit_build_normal_reference:
     threads: config.get("cnvkit_build_normal_reference", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("cnvkit_build_normal_reference", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get(
-            "cnvkit_build_normal_reference", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]
-        ),
+        mem_per_cpu=config.get("cnvkit_build_normal_reference", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
         partition=config.get("cnvkit_build_normal_reference", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvkit_build_normal_reference", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvkit_build_normal_reference", {}).get("time", config["default_resources"]["time"]),
