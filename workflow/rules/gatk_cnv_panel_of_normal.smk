@@ -6,11 +6,7 @@ __license__ = "GPL3"
 
 rule bed_to_interval_list:
     input:
-<<<<<<< HEAD
-        bed=config.get("reference", {}).get("design_bedfile", ""),
-=======
         bed=config.get("reference", {}).get("design_bed", ""),
->>>>>>> 5fb617df0f174a2594eb99e2b0152bd64ac50c0e
         ref=config.get("reference", {}).get("fasta", ""),
         ref_dict=config.get("reference", {}).get("dict", ""),
     output:
@@ -42,11 +38,7 @@ rule bed_to_interval_list:
 rule preprocess_intervals:
     input:
         ref=config.get("reference", {}).get("fasta", ""),
-<<<<<<< HEAD
-        intervalList="references/bed_to_interval_list/%s.interval_list" % config["reference"]["design_bedfile"].split("/")[-1],
-=======
         intervalList="references/bed_to_interval_list/%s.interval_list" % config.get("reference", {}).get("design_bed", "").split("/")[-1],
->>>>>>> 5fb617df0f174a2594eb99e2b0152bd64ac50c0e
     output:
         temp(
             "references/preprocess_intervals/%s.preprocessed.interval_list"
