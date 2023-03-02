@@ -37,9 +37,9 @@ rule exomedepth_reference:
     input:
         bam_list_file="references/exomedepth_bam_list/bam_files.list",
     output:
-        reference="references/exomedepth_reference/RefCount.mat"
+        reference="references/exomedepth_reference/RefCount.Rdata",
     params:
-        bed=config.get("exomedepth_reference", {}).get("exons_bed", ""),
+        bed=config.get("reference", {}).get("design_bed", ""),
         extra=config.get("exomedepth_reference", {}).get("extra", ""),
     log:
         "references/exomedepth_reference/bam_files.list.output.log",
