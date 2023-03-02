@@ -97,6 +97,23 @@ properties:
         type: string
         description: extra parameters sent to create_read_count_panel_of_normals
 
+  exomedepth_bam_list:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  exomedepth_reference:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to exomedepth_reference
+
   msisensor_pro_scan:
     type: object
     properties:
