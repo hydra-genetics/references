@@ -10,7 +10,9 @@ rule bed_to_interval_list:
         ref=config.get("reference", {}).get("fasta", ""),
         ref_dict=config.get("reference", {}).get("dict", ""),
     output:
-        temp("references/bed_to_interval_list/%s.interval_list" % config["reference"]["design_bed"].split("/")[-1]),
+        temp("references/bed_to_interval_list/%s.interval_list" 
+             % config.get("reference", {}).get("design_bed", "").split("/")[-1]
+        ),
     log:
         "references/bed_to_interval_list/bed_to_interval_list.output.log",
     benchmark:
