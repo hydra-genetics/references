@@ -101,7 +101,7 @@ rule purecn_coverage:
     conda:
         "../envs/purecn.yaml"
     message:
-        "{rule}: calculate coverage for all samples in {bam_list_file}"
+        "{rule}: calculate coverage for all samples in {input}"
     shell:
         "(Rscript $PURECN/Coverage.R "
         "--out-dir=references/purecn_coverage "
