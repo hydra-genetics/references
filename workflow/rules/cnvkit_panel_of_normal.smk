@@ -9,6 +9,8 @@ rule cnvkit_create_targets:
         bed=config.get("reference", {}).get("design_bed", ""),
     output:
         bed=temp("references/cnvkit_create_targets/cnvkit_manifest.target.bed"),
+    params:
+        extra=config.get("cnvkit_create_targets", {}).get("extra", ""),
     log:
         "references/cnvkit_create_targets/cnvkit_manifest.target.bed.log",
     benchmark:
@@ -30,7 +32,7 @@ rule cnvkit_create_targets:
     message:
         "{rule}: create target bed file for cnvkit from design bed"
     shell:
-        "(cnvkit.py target --split {input.bed} -o {output.bed}) &> {log}"
+        "(cnvkit.py target --split {input.bed} -o {output.bed} {params.extra}) &> {log}"
 
 
 rule cnvkit_create_anti_targets:
@@ -38,6 +40,8 @@ rule cnvkit_create_anti_targets:
         bed="references/cnvkit_create_targets/cnvkit_manifest.target.bed",
     output:
         bed=temp("references/cnvkit_create_anti_targets/cnvkit_manifest.antitarget.bed"),
+    params:
+        extra=config.get("cnvkit_create_anti_targets", {}).get("extra", ""),
     log:
         "references/cnvkit_create_anti_targets/cnvkit_manifest.antitarget.bed.log",
     benchmark:
@@ -59,7 +63,7 @@ rule cnvkit_create_anti_targets:
     message:
         "{rule}: create anti target bed file for cnvkit from design bed"
     shell:
-        "(cnvkit.py antitarget {input.bed} -o {output.bed}) &> {log}"
+        "(cnvkit.py antitarget {input.bed} -o {output.bed} {params.extra}) &> {log}"
 
 
 rule cnvkit_build_normal_reference:
