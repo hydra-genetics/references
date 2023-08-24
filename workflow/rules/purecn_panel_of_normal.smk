@@ -78,23 +78,15 @@ rule purecn_coverage:
     input:
         bam_list_file="references/purecn_bam_list/bam_files.list",
     output:
-        expand(
-            "references/purecn_coverage/{{sample}}_{{type}}{ext}",
-            ext=[
-                "_coverage.txt.gz",
-                "_coverage_loess.txt.gz",
-                "_coverage_loess.png",
-                "_coverage_loess_qc.txt",
-            ],
-        ),
+        coverage_list=get_coverage_files(samples, units),
     params:
         intervals=config.get("purecn_coverage", {}).get("intervals", ""),
         extra=config.get("purecn_coverage", {}).get("extra", ""),
     log:
-        "references/purecn_coverage/{sample}_{type}.output.log",
+        "references/purecn_coverage/purecn_coverage.output.log",
     benchmark:
         repeat(
-            "references/purecn_coverage/{sample}_{type}.output.benchmark.tsv",
+            "references/purecn_coverage/purecn_coverage.output.benchmark.tsv",
             config.get("purecn_coverage", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("purecn_coverage", {}).get("threads", config["default_resources"]["threads"])
@@ -109,7 +101,7 @@ rule purecn_coverage:
     conda:
         "../envs/purecn.yaml"
     message:
-        "{rule}: calculate coverage for {wildcards.sample}"
+        "{rule}: calculate coverage for all samples in {input}"
     shell:
         "(Rscript $PURECN/Coverage.R "
         "--out-dir=references/purecn_coverage "
