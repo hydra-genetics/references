@@ -68,7 +68,7 @@ rule cnvkit_create_anti_targets:
 
 rule cnvkit_build_normal_reference:
     input:
-        bams=get_bams(units),
+        bams=lambda wildcards: get_bams(units),
         target="references/cnvkit_create_targets/cnvkit_manifest.target.bed",
         antitarget="references/cnvkit_create_anti_targets/cnvkit_manifest.antitarget.bed",
         ref=config.get("reference", {}).get("fasta", ""),
