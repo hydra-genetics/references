@@ -21,6 +21,20 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
+      - name: Build
+        run: |
+          echo "Free space:"
+          df -h
+      - name: Remove stuff
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force
+      - name: Build
+        run: |
+          echo "Free space:"
+          df -h
       - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v2
         with:
