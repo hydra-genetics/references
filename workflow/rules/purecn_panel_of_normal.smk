@@ -184,13 +184,13 @@ rule purecn_normal_db:
         normal_vcf="references/bcftools_merge/normal_db.vcf.gz",
         normal_vcf_tbi="references/bcftools_merge/normal_db.vcf.gz.tbi",
     output:
-        normal_db="references/purecn_normal_db/output/normalDB_{genome_build}.rds",
-        mapping_bias="references/purecn_normal_db/output/mapping_bias_{genome_build}.rds",
+        normal_db="references/purecn_normal_db/output/normalDB.rds",
+        mapping_bias="references/purecn_normal_db/output/mapping_bias.rds",
         out_dir=directory("references/purecn_normal_db/output/"),
     params:
-        genome=lambda wildcards: wildcards.genome_build
+        genome=config.get("purecn_normal_db", {}).get("genome", "hg19"),
     log:
-        "references/purecn_normal_db/noraml_db_{genome_build}.output.log",
+        "references/purecn_normal_db/noraml_db.output.log",
     benchmark:
         repeat(
             "references/purecn_normal_db/noraml_db_{genome_build}.output.benchmark.tsv",
@@ -214,4 +214,7 @@ rule purecn_normal_db:
         "--out-dir {output.out_dir} "
         "--coverage-files {input.coverage_list_file} "
         "--normal-panel {input.normal_vcf} "
-        "--genome {params.genome}) &> {log}"
+        "--genome {params.genome} && "
+        "cp {output.out_dir}/normalDB* {output.normal_db} && "
+        "cp {output.out_dir}/mapping_bias* {output.mapping_bias} "
+        ") &> {log}"
