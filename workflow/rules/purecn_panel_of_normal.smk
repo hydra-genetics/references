@@ -215,7 +215,6 @@ rule purecn_normal_db:
         "--coverage-files {input.coverage_list_file} "
         "--normal-panel {input.normal_vcf} "
         "--genome {params.genome} && "
-        "cp {output.out_dir}/*rds . && "
         "cp {output.out_dir}/normalDB_{params.genome}.rds {output.normal_db} && "
         "cp {output.out_dir}/mapping_bias_{params.genome}.rds {output.mapping_bias} "
         ") &> {log}"
