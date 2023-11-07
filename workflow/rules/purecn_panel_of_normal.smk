@@ -184,13 +184,13 @@ rule purecn_normal_db:
         normal_vcf="references/bcftools_merge/normal_db.vcf.gz",
         normal_vcf_tbi="references/bcftools_merge/normal_db.vcf.gz.tbi",
     output:
-        normal_db="references/purecn_normal_db/output/normalDB.rds",
-        mapping_bias="references/purecn_normal_db/output/mapping_bias.rds",
+        normal_db="references/purecn_normal_db/output/normalDB_{genome_build}.rds",
+        mapping_bias="references/purecn_normal_db/output/mapping_bias_{genome_build}.rds",
         out_dir=directory("references/purecn_normal_db/output/"),
     params:
-        genome=config.get("purecn_normal_db", {}).get("genome", "hg19"),
+        genome=lambda wildcards: wildcards.genome_build
     log:
-        "references/purecn_normal_db/noraml_db.output.log",
+        "references/purecn_normal_db/noraml_db_{genome_build}.output.log",
     benchmark:
         repeat(
             "references/purecn_normal_db/noraml_db.output.benchmark.tsv",
