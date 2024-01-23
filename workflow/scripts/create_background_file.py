@@ -41,6 +41,7 @@ for file_name in gvcf_files:
             alt_AF = 0.0
             if DP > min_dp:
                 alt_AF = alt_AD / float(DP)
+            else:
                 continue
             if alt_AF > 1 - max_af:
                 alt_AF = 1 - alt_AF
