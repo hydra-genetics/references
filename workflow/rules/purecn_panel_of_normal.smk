@@ -190,10 +190,10 @@ rule purecn_normal_db:
     params:
         genome=config.get("purecn_normal_db", {}).get("genome", "hg19"),
     log:
-        "references/purecn_normal_db/noraml_db.output.log",
+        "references/purecn_normal_db/normal_db.output.log",
     benchmark:
         repeat(
-            "references/purecn_normal_db/noraml_db.output.benchmark.tsv",
+            "references/purecn_normal_db/normal_db.output.benchmark.tsv",
             config.get("purecn_normal_db", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("purecn_normal_db", {}).get("threads", config["default_resources"]["threads"])
