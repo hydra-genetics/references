@@ -61,7 +61,7 @@ def get_bais(units: pandas.DataFrame) -> typing.List[str]:
     Returns:
         List of strings with all bam.bai file names and path
     """
-    return [bam_string + ".bai" for bam_string in get_units_column(units, "bam")]
+    return [f"{bam_string}.bai" for bam_string in get_units_column(units, "bam")]
 
 
 def get_coverage_files(samples, units):
