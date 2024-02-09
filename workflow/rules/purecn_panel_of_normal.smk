@@ -48,6 +48,7 @@ rule purecn_interval_file:
 rule purecn_bam_list:
     input:
         bam_list=get_bams(units),
+        bai_list=get_bais(units),
     output:
         bam_list_file="references/purecn_bam_list/bam_files.list",
     log:

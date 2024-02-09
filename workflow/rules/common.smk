@@ -44,12 +44,24 @@ def get_bams(units: pandas.DataFrame) -> typing.List[str]:
     """
     function used to extract all bam files found in units.tsv
     Args:
-        units: DataFrame generate by importing a file following schema defintion
+        units: DataFrame generate by importing a file following schema definition
                found in pre-alignment/workflow/schemas/units.schema.tsv
     Returns:
         List of strings with all bam file names and path
     """
     return get_units_column(units, "bam")
+
+
+def get_bais(units: pandas.DataFrame) -> typing.List[str]:
+    """
+    function used to extract all bam files found in units.tsv and add .bai to the filename
+    Args:
+        units: DataFrame generate by importing a file following schema definition
+               found in pre-alignment/workflow/schemas/units.schema.tsv
+    Returns:
+        List of strings with all bam.bai file names and path
+    """
+    return [f"{bam_string}.bai" for bam_string in get_units_column(units, "bam")]
 
 
 def get_coverage_files(samples, units):
@@ -65,7 +77,7 @@ def get_gvcfs(units: pandas.DataFrame) -> typing.List[str]:
     """
     function used to extract all gvcf files found in units.tsv
     Args:
-        units: DataFrame generate by importing a file following schema defintion
+        units: DataFrame generate by importing a file following schema definition
                found in pre-alignment/workflow/schemas/units.schema.tsv
     Returns:
         List of strings with all gvcf file names and path
@@ -77,7 +89,7 @@ def get_vcfs(units: pandas.DataFrame) -> typing.List[str]:
     """
     function used to extract all vcf files found in units.tsv
     Args:
-        units: DataFrame generate by importing a file following schema defintion
+        units: DataFrame generate by importing a file following schema definition
                found in pre-alignment/workflow/schemas/units.schema.tsv
     Returns:
         List of strings with all vcf file names and path
@@ -89,7 +101,7 @@ def get_cnv_vcfs(units: pandas.DataFrame) -> typing.List[str]:
     """
     function used to extract all cnv.vcf files found in units.tsv
     Args:
-        units: DataFrame generate by importing a file following schema defintion
+        units: DataFrame generate by importing a file following schema definition
                found in pre-alignment/workflow/schemas/units.schema.tsv
     Returns:
         List of strings with all cnv.vcf file names and path
