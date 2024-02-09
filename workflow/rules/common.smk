@@ -52,6 +52,18 @@ def get_bams(units: pandas.DataFrame) -> typing.List[str]:
     return get_units_column(units, "bam")
 
 
+def get_bais(units: pandas.DataFrame) -> typing.List[str]:
+    """
+    function used to extract all bam files found in units.tsv and add .bai to the filenam
+    Args:
+        units: DataFrame generate by importing a file following schema defintion
+               found in pre-alignment/workflow/schemas/units.schema.tsv
+    Returns:
+        List of strings with all bam.bai file names and path
+    """
+    return [bam_string + ".bai" for bam_string in get_units_column(units, "bam")]
+
+
 def get_coverage_files(samples, units):
     coverage_list = [
         "references/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
