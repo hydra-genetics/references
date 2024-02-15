@@ -27,8 +27,6 @@ rule svdb_build:
         partition=config.get("svdb_build", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("svdb_build", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("svdb_build", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/svdb_cnv_db.yaml"
     container:
         config.get("svdb_build", {}).get("container", config["default_container"])
     message:
@@ -59,8 +57,6 @@ rule svdb_export:
         partition=config.get("svdb_export", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("svdb_export", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("svdb_export", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/svdb_cnv_db.yaml"
     container:
         config.get("svdb_export", {}).get("container", config["default_container"])
     message:

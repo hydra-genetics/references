@@ -133,7 +133,7 @@ wildcard_constraints:
 def compile_output_list(wildcards):
     return [
         "references/cnvkit_build_normal_reference/cnvkit.PoN.cnn",
-        "references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5",
+        #"references/create_read_count_panel_of_normals/gatk_cnv_panel_of_normal.hdf5",
         "references/exomedepth_reference/RefCount.Rdata",
         "references/msisensor_pro_baseline/Msisensor_pro_reference.list_baseline",
         "references/create_background_file/background_panel.tsv",
@@ -141,5 +141,5 @@ def compile_output_list(wildcards):
         "references/svdb_export/svdb_cnv.vcf",
         "references/purecn_normal_db/output/normalDB.rds",
         "references/purecn_normal_db/output/mapping_bias.rds",
-        "references/purecn_interval_file/targets_intervals.txt",
+        #"references/purecn_interval_file/targets_intervals.txt",
     ]
