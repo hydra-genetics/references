@@ -130,6 +130,7 @@ wildcard_constraints:
     unit="N|T|R",
 
 
+# Output files commented out as they do not work in integration testing using small files
 def compile_output_list(wildcards):
     return [
         "references/cnvkit_build_normal_reference/cnvkit.PoN.cnn",
