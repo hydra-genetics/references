@@ -1,6 +1,6 @@
 ##fileformat=VCFv4.1
 ##source=MergeVCF
-##SVDB_version=2.5.0 cmd="/usr/local/bin/svdb --merge --vcf cnv_sv/cnvkit_vcf/VAL-01_T.vcf cnv_sv/gatk_cnv_vcf/VAL-01_T.vcf"
+##SVDB_version=2.5.0 cmd="/usr/local/bin/svdb --merge --vcf cnv_sv/cnvkit_vcf/VAL-02_T.vcf cnv_sv/gatk_cnv_vcf/VAL-02_T.vcf"
 ##ALT=<ID=COPY_NORMAL,Description="Normal copy number">
 ##ALT=<ID=DEL,Description="Deletion">
 ##ALT=<ID=DUP,Description="Duplication">
@@ -20,8 +20,8 @@
 ##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
 ##INFO=<ID=VARID,Number=1,Type=String,Description="The variant ID of merged samples">
 ##INFO=<ID=set,Number=1,Type=String,Description="Source VCF for the merged record in SVDB">
-##svdbcmdline=/usr/local/bin/svdb --merge --vcf cnv_sv/cnvkit_vcf/VAL-01_T.vcf cnv_sv/gatk_cnv_vcf/VAL-01_T.vcf
-#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	VAL-01
+##svdbcmdline=/usr/local/bin/svdb --merge --vcf cnv_sv/cnvkit_vcf/VAL-02_T.vcf cnv_sv/gatk_cnv_vcf/VAL-02_T.vcf
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	VAL-02
 chr1	150500	.	N	<DUP>	.	.	SVTYPE=DUP;END=3683764;SVLEN=3533265;LOG_ODDS_RATIO=0.399256;COPY_NUMBER=2.6;PROBES=28;BAF=0.471849;set=Intersection	GT:CN:CNQ:DP:BAF	0/1:2.6:28:254.453:0.471849
 chr1	934169	.	N	<COPY_NORMAL>	.	.	SVTYPE=COPY_NORMAL;END=37948239;SVLEN=37014071;LOG_ODDS_RATIO=-0.027334;COPY_NUMBER=2.0;PROBES=264;BAF=0.235079;BAF_PROBES=46;set=Intersection	GT:CN:CNQ:BAF:BAFQ	0/0:2.0:264:0.235079:46
 chr1	3683764	.	N	<COPY_NORMAL>	.	.	SVTYPE=COPY_NORMAL;END=16451835;SVLEN=12768072;LOG_ODDS_RATIO=-0.0351232;COPY_NUMBER=2.0;PROBES=275;BAF=0.180087;set=Intersection	GT:CN:CNQ:DP:BAF	0/0:2.0:275:1239.31:0.180087
