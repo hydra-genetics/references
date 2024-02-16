@@ -26,8 +26,6 @@ rule create_background_file:
         partition=config.get("create_background_file", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("create_background_file", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("create_background_file", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/create_background_file.yaml"
     container:
         config.get("create_background_file", {}).get("container", config["default_container"])
     message:

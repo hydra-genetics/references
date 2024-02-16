@@ -25,8 +25,6 @@ rule exomedepth_bam_list:
         time=config.get("exomedepth_bam_list", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("exomedepth_bam_list", {}).get("container", config["default_container"])
-    conda:
-        "../envs/exomedepth_reference.yaml"
     message:
         "{rule}: make a bam list file for purecn coverage"
     shell:
@@ -57,8 +55,6 @@ rule exomedepth_reference:
         time=config.get("exomedepth_reference", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("exomedepth_reference", {}).get("container", config["default_container"])
-    conda:
-        "../envs/exomedepth_reference.yaml"
     message:
         "{rule}: calculate read counts for samples in {input.bam_list_file}"
     script:

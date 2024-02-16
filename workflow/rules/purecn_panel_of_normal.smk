@@ -30,8 +30,6 @@ rule purecn_interval_file:
         time=config.get("purecn_interval_file", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("purecn_interval_file", {}).get("container", config["default_container"])
-    conda:
-        "../envs/purecn.yaml"
     message:
         "{rule}: make an interval file for purecn"
     shell:
@@ -67,8 +65,6 @@ rule purecn_bam_list:
         time=config.get("purecn_bam_list", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("purecn_bam_list", {}).get("container", config["default_container"])
-    conda:
-        "../envs/purecn.yaml"
     message:
         "{rule}: make a bam list file for purecn coverage"
     shell:
@@ -99,8 +95,6 @@ rule purecn_coverage:
         time=config.get("purecn_coverage", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("purecn_coverage", {}).get("container", config["default_container"])
-    conda:
-        "../envs/purecn.yaml"
     message:
         "{rule}: calculate coverage for all samples in {input}"
     shell:
@@ -133,8 +127,6 @@ rule purecn_coverage_list:
         time=config.get("purecn_coverage_list", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("purecn_coverage_list", {}).get("container", config["default_container"])
-    conda:
-        "../envs/purecn.yaml"
     message:
         "{rule}: make a coverage list file for purecn normalDB"
     shell:
@@ -167,8 +159,6 @@ rule bcftools_merge:
         time=config.get("bcftools_merge", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("bcftools_merge", {}).get("container", config["default_container"])
-    conda:
-        "../envs/purecn.yaml"
     message:
         "{rule}: merge normal sample vcf files into one big vcf file"
     shell:
@@ -206,8 +196,6 @@ rule purecn_normal_db:
         time=config.get("purecn_normal_db", {}).get("time", config["default_resources"]["time"]),
     container:
         config.get("purecn_normal_db", {}).get("container", config["default_container"])
-    conda:
-        "../envs/purecn.yaml"
     message:
         "{rule}: calculate normal DB for purecn"
     shell:
