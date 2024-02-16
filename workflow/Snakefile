@@ -21,11 +21,6 @@ include: "rules/svdb_cnv_db.smk"
 report: "report/workflow.rst"
 
 
-use rule create_read_count_panel_of_normals as create_read_count_panel_of_normals2 with:
-    wildcard_constraints:
-        type="N"
-
-
 rule all:
     input:
         unpack(compile_output_list),
