@@ -63,7 +63,16 @@ for key in background_dict:
         the result should be an unbiased estimate of the true population variance.'''
         stdev_background = statistics.stdev(background_dict[key])
         background_file.write(
-            key.split("_")[0] + "\t" + key.split("_")[1] + "\t" + str(median_background) + "\t" + str(stdev_background) + "\t" + str(nr_obs) +"\n"
+            key.split("_")[0]
+            + "\t"
+            + key.split("_")[1]
+            + "\t"
+            + str(median_background)
+            + "\t"
+            + str(stdev_background)
+            + "\t"
+            + str(nr_obs)
+            + "\n"
         )
 
 background_file.close()
