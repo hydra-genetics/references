@@ -32,7 +32,6 @@ properties:
     - default_resources
 
 
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
   jumble_count:
     type: object
     description: resource definitions for jumble_count
@@ -54,8 +53,6 @@ properties:
         description: max execution time
 
 
-
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
   jumble_reference:
     type: object
     description: resource definitions for jumble_reference

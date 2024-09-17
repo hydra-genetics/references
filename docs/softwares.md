@@ -1,6 +1,6 @@
 
-## [jumble_count](url_to_tool)
-Introduction to jumble_count
+## [jumble_count](https://github.com/ClinSeq/jumble)
+Create read count files from bam files used for Jumble panel of normal creation.
 
 ### :snake: Rule
 
@@ -20,8 +20,10 @@ Introduction to jumble_count
 
 #RESOURCESSCHEMA__jumble_count#
 
-## [jumble_reference](url_to_tool)
-Introduction to jumble_reference
+---
+
+## [jumble_reference](https://github.com/ClinSeq/jumble)
+Creates a panel of normal for the CNV caller Jumble.
 
 ### :snake: Rule
 

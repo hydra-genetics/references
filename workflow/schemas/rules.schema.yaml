@@ -2,7 +2,6 @@ $schema: "http://json-schema.org/draft-04/schema#"
 description: snakemake rule input and output files description file
 type: object
 properties:
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
   jumble_count:
     type: object
     description: input and output parameters for jumble_count
@@ -11,21 +10,20 @@ properties:
         type: object
         description: list of inputs
         properties:
-          input1:
+          bam:
             type: string
-            description: description input1
-            #value: set to override value in table, else remove
-
+            description: bam file
+          bai:
+            type: string
+            description: bam index file
       output:
         type: object
         description: list of outputs
         properties:
-          output1:
+          counts:
             type: string
-            description: description output1
-            #value: set to override value in table, else remove
+            description: Read counts for PoN creation with jumble_reference
 
-# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
   jumble_reference:
     type: object
     description: input and output parameters for jumble_reference
@@ -34,16 +32,13 @@ properties:
         type: object
         description: list of inputs
         properties:
-          input1:
+          counts:
             type: string
-            description: description input1
-            #value: set to override value in table, else remove
-
+            description: List of read counts files created by jumble_count
       output:
         type: object
         description: list of outputs
         properties:
-          output1:
+          PoN:
             type: string
-            description: description output1
-            #value: set to override value in table, else remove
+            description: Panel of normal reference used by the CNV caller Jumble

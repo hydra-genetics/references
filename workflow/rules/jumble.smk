@@ -11,7 +11,6 @@ rule jumble_count:
     output:
         counts=temp("alignment/jumble_count/{sample}_{type}.bam.counts.RDS"),
     params:
-        reference=config.get("jumble_count", {}).get("normal_reference", ""),
         bed=config.get("reference", {}).get("design_bed", ""),
     log:
         "references/jumble_count/{sample}_{type}.output.log",
@@ -45,7 +44,7 @@ rule jumble_reference:
     params:
         annotation=config.get("jumble_reference", {}).get("annotation", ""),
         bed=config.get("reference", {}).get("design_bed", ""),
-        input_dir="alignment/jumble_count/",
+        input_dir=lambda wildcards, input: os.path.dirname(input[0]),
         output_dir="alignment/jumble_reference/",
     log:
         "references/jumble_reference/%s.reference.RDS.output.log"
