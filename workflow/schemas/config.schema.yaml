@@ -245,3 +245,37 @@ properties:
       genome:
         type: string
         description: reference genome
+
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  jumble_count:
+    type: object
+    description: parameters for jumble_count
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
+
+
+# Entry added using Hydra-Genetics CLI - please move it into alphabetically sorted order
+  jumble_reference:
+    type: object
+    description: parameters for jumble_reference
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
