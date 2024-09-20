@@ -12,11 +12,12 @@ rule jumble_count:
         counts=temp("alignment/jumble_count/{sample}_{type}.bam.counts.RDS"),
     params:
         bed=config.get("reference", {}).get("design_bed", ""),
+        output_tmp=lambda wildcards, input: os.path.basename(output[0]),
     log:
-        "references/jumble_count/{sample}_{type}.output.log",
+        "references/jumble_count/{sample}_{type}.bam.counts.RDS.output.log",
     benchmark:
         repeat(
-            "references/jumble_count/{sample}_{type}.output.benchmark.tsv",
+            "references/jumble_count/{sample}_{type}.bam.counts.RDS.output.benchmark.tsv",
             config.get("jumble_count", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("jumble_count", {}).get("threads", config["default_resources"]["threads"])
@@ -33,7 +34,8 @@ rule jumble_count:
     shell:
         "(Rscript /Jumble/jumble-count.R "
         "-t {params.bed} "
-        "-b {input.bam}) &> {log}"
+        "-b {input.bam} && "
+        "mv {params.output_tmp} {output.counts}) &> {log}"
 
 
 rule jumble_reference:
