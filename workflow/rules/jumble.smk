@@ -9,7 +9,7 @@ rule jumble_count:
         bam=lambda wildcards: get_units(units, wildcards)[0].bam,
         bai=lambda wildcards: "%s.bai" % get_units(units, wildcards)[0].bam,
     output:
-        counts=temp("alignment/jumble_count/{sample}_{type}.bam.counts.RDS"),
+        counts=temp("references/jumble_count/{sample}_{type}.bam.counts.RDS"),
     params:
         bed=config.get("reference", {}).get("design_bed", ""),
         output_tmp=lambda wildcards, output: os.path.basename(output[0]),
