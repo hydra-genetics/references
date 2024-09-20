@@ -47,7 +47,7 @@ rule jumble_reference:
         annotation=config.get("jumble_reference", {}).get("annotation", ""),
         bed=config.get("reference", {}).get("design_bed", ""),
         input_dir=lambda wildcards, input: os.path.dirname(input[0]),
-        output_dir="alignment/jumble_reference/",
+        output_dir=lambda wildcards, output: os.path.dirname(output[0]),
     log:
         "references/jumble_reference/%s.reference.RDS.output.log"
         % config.get("reference", {}).get("design_bed", "").split("/")[-1],
