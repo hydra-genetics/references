@@ -66,7 +66,7 @@ def get_bais(units: pandas.DataFrame) -> typing.List[str]:
 
 def get_counts(samples, units):
     count_list = [
-        "alignment/jumble_count/%s_%s.bam.counts.RDS" % (sample, unit_type)
+        "references/jumble_count/%s_%s.bam.counts.RDS" % (sample, unit_type)
         for sample in get_samples(samples)
         for unit_type in get_unit_types(units, sample)
     ]
