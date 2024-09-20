@@ -32,7 +32,7 @@ rule jumble_count:
         "{rule}: generate counts in for supplied bedfile in {input.bam}"
     shell:
         "(Rscript /Jumble/jumble-count.R "
-        "-T {params.bed} "
+        "-t {params.bed} "
         "-b {input.bam}) &> {log}"
 
 
