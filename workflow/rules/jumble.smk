@@ -12,7 +12,7 @@ rule jumble_count:
         counts=temp("alignment/jumble_count/{sample}_{type}.bam.counts.RDS"),
     params:
         bed=config.get("reference", {}).get("design_bed", ""),
-        output_tmp=lambda wildcards, input: os.path.basename(output[0]),
+        output_tmp=lambda wildcards, output: os.path.basename(output[0]),
     log:
         "references/jumble_count/{sample}_{type}.bam.counts.RDS.output.log",
     benchmark:
