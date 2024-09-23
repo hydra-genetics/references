@@ -1,0 +1,44 @@
+$schema: "http://json-schema.org/draft-04/schema#"
+description: snakemake rule input and output files description file
+type: object
+properties:
+  jumble_count:
+    type: object
+    description: input and output parameters for jumble_count
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: bam file
+          bai:
+            type: string
+            description: bam index file
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          counts:
+            type: string
+            description: Read counts for PoN creation with jumble_reference
+
+  jumble_reference:
+    type: object
+    description: input and output parameters for jumble_reference
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          counts:
+            type: string
+            description: List of read counts files created by jumble_count
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          PoN:
+            type: string
+            description: Panel of normal reference used by the CNV caller Jumble
