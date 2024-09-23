@@ -23,8 +23,6 @@ rule msisensor_pro_scan:
         partition=config.get("msisensor_pro_scan", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("msisensor_pro_scan", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("msisensor_pro_scan", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/msi_sensor_pro_panel_of_normal.yaml"
     container:
         config.get("msisensor_pro_scan", {}).get("container", config["default_container"])
     message:
@@ -52,8 +50,6 @@ rule msisensor_pro_input_file:
         partition=config.get("msisensor_pro_input_file", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("msisensor_pro_input_file", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("msisensor_pro_input_file", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/msi_sensor_pro_panel_of_normal.yaml"
     container:
         config.get("msisensor_pro_input_file", {}).get("container", config["default_container"])
     message:
@@ -85,8 +81,6 @@ rule msisensor_pro_baseline:
         partition=config.get("msisensor_pro_baseline", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("msisensor_pro_baseline", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("msisensor_pro_baseline", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/msi_sensor_pro_panel_of_normal.yaml"
     container:
         config.get("msisensor_pro_baseline", {}).get("container", config["default_container"])
     message:

@@ -25,8 +25,6 @@ rule create_artifact_file:
         partition=config.get("create_artifact_file", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("create_artifact_file", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("create_artifact_file", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/create_artifact_file.yaml"
     container:
         config.get("cnvkit_create_targets", {}).get("container", config["default_container"])
     message:

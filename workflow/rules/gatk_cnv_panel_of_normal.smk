@@ -27,8 +27,6 @@ rule bed_to_interval_list:
         partition=config.get("bed_to_interval_list", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("bed_to_interval_list", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("bed_to_interval_list", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/gatk_cnv_panel_of_normal.yaml"
     container:
         config.get("bed_to_interval_list", {}).get("container", config["default_container"])
     message:
@@ -65,8 +63,6 @@ rule preprocess_intervals:
         partition=config.get("preprocess_intervals", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("preprocess_intervals", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("preprocess_intervals", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/gatk_cnv_panel_of_normal.yaml"
     container:
         config.get("preprocess_intervals", {}).get("container", config["default_container"])
     message:
@@ -101,8 +97,6 @@ rule collect_read_counts:
         partition=config.get("collect_read_counts", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("collect_read_counts", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("collect_read_counts", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/gatk_cnv_panel_of_normal.yaml"
     container:
         config.get("collect_read_counts", {}).get("container", config["default_container"])
     message:
@@ -140,8 +134,6 @@ rule create_read_count_panel_of_normals:
         partition=config.get("create_read_count_panel_of_normals", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("create_read_count_panel_of_normals", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("create_read_count_panel_of_normals", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/gatk_cnv_panel_of_normal.yaml"
     container:
         config.get("create_read_count_panel_of_normals", {}).get("container", config["default_container"])
     message:

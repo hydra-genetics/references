@@ -25,8 +25,6 @@ rule cnvkit_create_targets:
         partition=config.get("cnvkit_create_targets", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvkit_create_targets", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvkit_create_targets", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/cnvkit_panel_of_normal.yaml"
     container:
         config.get("cnvkit_create_targets", {}).get("container", config["default_container"])
     message:
@@ -56,8 +54,6 @@ rule cnvkit_create_anti_targets:
         partition=config.get("cnvkit_create_anti_targets", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvkit_create_anti_targets", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvkit_create_anti_targets", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/cnvkit_panel_of_normal.yaml"
     container:
         config.get("cnvkit_create_anti_targets", {}).get("container", config["default_container"])
     message:
@@ -102,8 +98,6 @@ rule cnvkit_build_normal_reference:
         partition=config.get("cnvkit_build_normal_reference", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("cnvkit_build_normal_reference", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("cnvkit_build_normal_reference", {}).get("time", config["default_resources"]["time"]),
-    conda:
-        "../envs/cnvkit_panel_of_normal.yaml"
     container:
         config.get("cnvkit_build_normal_reference", {}).get("container", config["default_container"])
     message:
