@@ -27,6 +27,29 @@ properties:
     - resources
     - default_container
 
+  bcftools_merge:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to bcftools_merge
+      info_rules:
+        type: string
+        description: option how bcftools should merge info in the vcf file
+      output_type:
+        type: string
+        description: output file zip option
+
+  bed_to_interval_list:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
   cnvkit_create_targets:
     type: object
     properties:
@@ -54,28 +77,30 @@ properties:
         type: string
         description: extra parameters sent to cnvkit_build_normal_reference
 
-  bed_to_interval_list:
+  create_background_file:
     type: object
     properties:
       container:
         type: string
         description: name or path to docker/singularity container
+      min_dp:
+        type: integer
+        description: min depth to be included in the background calculation
+      max_af:
+        type: float
+        description: max variant allele frequency to be included in the background calculation
 
-  preprocess_intervals:
+  create_artifact_file:
     type: object
     properties:
       container:
         type: string
         description: name or path to docker/singularity container
-      bin_length:
-        type: string
-        description: size of bin regions (WGS 1000, Exomes/target 0)
-      padding:
-        type: string
-        description: bases added to design regions (WGS 0, Exomes/target 250)
-      extra:
-        type: string
-        description: extra parameters sent to preprocess_intervals (-imr OVERLAPPING_ONLY)
+      callers:
+        type: array
+        items:
+            type: string
+        description: list of variant callers to include
 
   collect_read_counts:
     type: object
@@ -114,6 +139,43 @@ properties:
         type: string
         description: extra parameters sent to exomedepth_reference
 
+  jumble_count:
+    type: object
+    description: parameters for jumble_count
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      bed:
+        type: string
+        description: path to design bed file
+
+  jumble_reference:
+    type: object
+    description: parameters for jumble_reference
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      annotation:
+        type: string
+        description: path to annotation file
+      bed:
+        type: string
+        description: path to design bed file
+      input_dir:
+        type: string
+        description: path to input directory, determined from input files
+      output_dir:
+        type: string
+        description: path to output directory
+
   msisensor_pro_scan:
     type: object
     properties:
@@ -138,47 +200,21 @@ properties:
         type: string
         description: extra parameters sent to msisensor_pro_baseline
 
-  create_background_file:
+  preprocess_intervals:
     type: object
     properties:
       container:
         type: string
         description: name or path to docker/singularity container
-      min_dp:
-        type: integer
-        description: min depth to be inculded in the background calculation
-      max_af:
-        type: float
-        description: max variant allele freuqency to be inculded in the background calculation
-
-  create_artifact_file:
-    type: object
-    properties:
-      container:
+      bin_length:
         type: string
-        description: name or path to docker/singularity container
-      callers:
-        type: array
-        items:
-            type: string
-        description: list of variant callers to include
-
-  svdb_build:
-    type: object
-    properties:
-      container:
+        description: size of bin regions (WGS 1000, Exomes/target 0)
+      padding:
         type: string
-        description: name or path to docker/singularity container
-
-  svdb_export:
-    type: object
-    properties:
-      container:
-        type: string
-        description: name or path to docker/singularity container
+        description: bases added to design regions (WGS 0, Exomes/target 250)
       extra:
         type: string
-        description: extra parameters sent to svdb_export
+        description: extra parameters sent to preprocess_intervals (-imr OVERLAPPING_ONLY)
 
   purecn_interval_file:
     type: object
@@ -220,22 +256,6 @@ properties:
         type: string
         description: name or path to docker/singularity container
 
-  bcftools_merge:
-    type: object
-    properties:
-      container:
-        type: string
-        description: name or path to docker/singularity container
-      extra:
-        type: string
-        description: extra parameters sent to bcftools_merge
-      info_rules:
-        type: string
-        description: option how bcftools should merge info in the vcf file
-      output_type:
-        type: string
-        description: output file zip option
-
   purecn_normal_db:
     type: object
     properties:
@@ -245,3 +265,20 @@ properties:
       genome:
         type: string
         description: reference genome
+      
+  svdb_build:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  svdb_export:
+    type: object
+    properties:
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: extra parameters sent to svdb_export
