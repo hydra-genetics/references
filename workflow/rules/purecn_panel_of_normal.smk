@@ -74,6 +74,8 @@ rule purecn_bam_list:
 rule purecn_coverage:
     input:
         bam_list_file="references/purecn_bam_list/bam_files.list",
+        bam_files=get_bams(units),
+        bai_files=get_bais(units),
     output:
         coverage_list=get_coverage_files(samples, units),
     params:
@@ -172,6 +174,7 @@ rule bcftools_merge:
 rule purecn_normal_db:
     input:
         coverage_list_file="references/purecn_coverage_list/coverage_files.list",
+        coverage_files=get_coverage_files(samples, units),
         normal_vcf="references/bcftools_merge/normal_db.vcf.gz",
         normal_vcf_tbi="references/bcftools_merge/normal_db.vcf.gz.tbi",
     output:

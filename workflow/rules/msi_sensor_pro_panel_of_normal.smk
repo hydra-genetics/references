@@ -61,6 +61,8 @@ rule msisensor_pro_input_file:
 rule msisensor_pro_baseline:
     input:
         bam_conf="references/msisensor_pro_input_file/configure.txt",
+        bam_files=get_bams(units),
+        bai_files=get_bais(units),
         PoN_list="references/msisensor_pro_scan/Msisensor_pro_reference.list",
     output:
         PoN_list=temp("references/msisensor_pro_baseline/Msisensor_pro_reference.list_baseline"),
