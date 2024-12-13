@@ -34,6 +34,8 @@ rule exomedepth_bam_list:
 rule exomedepth_reference:
     input:
         bam_list_file="references/exomedepth_bam_list/bam_files.list",
+        bam_files=get_bams(units),
+        bai_files=get_bais(units),
     output:
         reference="references/exomedepth_reference/RefCount.Rdata",
     params:
