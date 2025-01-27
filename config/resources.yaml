@@ -1,0 +1,7 @@
+default_resources:
+  mem_mb: 1024
+  mem_per_cpu: 1024
+  partition: core
+  threads: 1
+  time: "12:00:00"
+
