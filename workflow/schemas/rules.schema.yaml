@@ -2,6 +2,57 @@ $schema: "http://json-schema.org/draft-04/schema#"
 description: snakemake rule input and output files description file
 type: object
 properties:
+
+  create_somatic_pon:
+    type: object
+    description: input and output parameters for jumble_reference
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          gendb:
+            type: string
+            description: Name of the database created in genomicsdbimport
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          vcf:
+            type: string
+            description: Panel of normal reference vcf to use with mutect2
+
+  genomicsdbimport:
+    type: object
+    description: takes gvcfs and create a db for creating a panel of normal
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          fasta:
+            type: string
+            description: fasta reference genome file
+          gvcfs:
+            type: string
+            description: gvcfs listed in units.tsv
+          interval:
+            type: string
+            description: Need at least one interval
+          normal_list:
+            type: string
+            description: sample_map, a list of one tab seperated sample and sample_type.g.vcf.gz per row 
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          gendb:
+            type: string
+            description: Name of the database for input in next software
+          path:
+            type: string
+            description: Path for database
+
   jumble_count:
     type: object
     description: input and output parameters for jumble_count
@@ -42,3 +93,4 @@ properties:
           PoN:
             type: string
             description: Panel of normal reference used by the CNV caller Jumble
+

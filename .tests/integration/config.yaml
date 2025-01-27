@@ -9,13 +9,11 @@ reference:
   dict: "reference/HES45.dict"
   design_bed: "reference/twist_DNA_solid.chr1.annotated.bed"
   mappability: "reference/access-5k-mappable.hg19.bed"
+  normals_list: "normals.sample_map"
 
-create_artifact_file:
-  callers:
-    - "vardict"
-    - "mutect2"
-    - "varscan"
-    - "freebayes"
+
+bed_to_interval_list:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
 
 cnvkit_create_targets:
   container: "docker://hydragenetics/cnvkit:0.9.9"
@@ -26,20 +24,28 @@ cnvkit_create_anti_targets:
 cnvkit_build_normal_reference:
   container: "docker://hydragenetics/cnvkit:0.9.9"
 
-bed_to_interval_list:
-  container: "docker://hydragenetics/gatk4:4.2.2.0"
-
-preprocess_intervals:
-  container: "docker://hydragenetics/gatk4:4.2.2.0"
-
 collect_read_counts:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+create_artifact_file:
+  callers:
+    - "vardict"
+    - "mutect2"
+    - "varscan"
+    - "freebayes"
 
 create_read_count_panel_of_normals:
   container: "docker://hydragenetics/gatk4:4.2.2.0"
 
+create_somatic_pon:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
 exomedepth_reference:
   container: "docker://hydragenetics/exomedepth:1.1.15"
+
+genomicsdbimport:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+  extra: ""
 
 jumble_count:
   container: "docker://hydragenetics/jumble:240530"
@@ -54,11 +60,8 @@ msisensor_pro_scan:
 msisensor_pro_baseline:
   container: "docker://hydragenetics/msisensor_pro:1.2.0"
 
-svdb_build:
-  container: "docker://hydragenetics/svdb:2.5.0"
-
-svdb_export:
-  container: "docker://hydragenetics/svdb:2.5.0"
+preprocess_intervals:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
 
 purecn_coverage:
   container: "docker://hydragenetics/purecn:2.2.0"
@@ -69,3 +72,9 @@ purecn_normal_db:
 
 purecn_interval_file:
   container: "docker://hydragenetics/purecn:2.2.0"
+
+svdb_build:
+  container: "docker://hydragenetics/svdb:2.5.0"
+
+svdb_export:
+  container: "docker://hydragenetics/svdb:2.5.0"
