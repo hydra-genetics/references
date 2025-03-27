@@ -58,6 +58,10 @@ for file_name in vcf_files:
                     FFPE_rm_dup_dict[key][caller] += 1
                     FFPE_call_dict[key][caller][0] += 1
                     FFPE_call_dict[key][caller][1].append(AF)
+                # If multiallelic, use the variant with the highest AF
+                else:
+                    if AF > FFPE_call_dict[key][caller][1][-1]:
+                        FFPE_call_dict[key][caller][1][-1] = AF
 
 
 artifact_panel.write("Chromosome\tpos\tvariant_type")
