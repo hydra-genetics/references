@@ -122,6 +122,26 @@ properties:
         type: string
         description: extra parameters sent to create_read_count_panel_of_normals
 
+  deepsomatic_pon:
+    type: object
+    description: parameters for deepsomatic_pon
+    properties:
+      model:
+        type: string
+        description: type of model to use for variant calling
+      name:
+        type: string
+        description: sample name
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      extra:
+        type: string
+        description: parameters that should be forwarded
+
   exomedepth_bam_list:
     type: object
     properties:
