@@ -44,7 +44,7 @@ Creates a panel of normal for the CNV caller Jumble.
 #RESOURCESSCHEMA__jumble_reference#
 
 ## [deepsomatic_deepsomatic_pon](https://github.com/google/deepsomatic)
-Introduction to deepsomatic_deepsomatic_pon
+Calls small variants from normal BAM files
 
 ### :snake: Rule
 
