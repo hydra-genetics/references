@@ -18,7 +18,8 @@ rule deepsomatic_pon:
         model=config.get("deepsomatic_pon", {}).get("model", ""),
         name=lambda wildcards: f"{wildcards.sample}",
     log:
-        "references/deepsomatic_pon/{sample}.deepsomatic_pon.log",
+        dir="references/deepsomatic_pon/{sample}.deepsomatic_pon.dir.log",
+        stdout="references/deepsomatic_pon/{sample}.deepsomatic_pon.stdout.log",
     benchmark:
         repeat(
             "references/deepsomatic_pon/{sample}.output.benchmark.tsv",
@@ -44,10 +45,10 @@ rule deepsomatic_pon:
         --output_vcf={output.vcf} \
         --sample_name_tumor={params.name} \
         --num_shards={resources.threads} \
-        --logging_dir={log} \
+        --logging_dir={log.dir} \
         --vcf_stats_report=true \
         --intermediate_results_dir {output.tmpdir} \
         --process_somatic=true \
         --regions={input.bed} \
-        {params.extra}
+        {params.extra} $> {log.stdout}
         """
