@@ -2,6 +2,38 @@ $schema: "http://json-schema.org/draft-04/schema#"
 description: snakemake rule input and output files description file
 type: object
 properties:
+
+  deepsomatic_pon:
+    type: object
+    description: input and output parameters for deepsomatic_pon
+    properties:
+      input:
+        type: object
+        description: list of inputs
+        properties:
+          bam:
+            type: string
+            description: bam file
+          bai:
+            type: string
+            description: bam index file
+          ref:
+            type: string
+            description: reference genome
+          bed:
+            type: string
+            description: bed file with target regions
+      output:
+        type: object
+        description: list of outputs
+        properties:
+          tmpdir:
+            type: string
+            description: temporary directory
+          vcf:
+            type: string
+            description: VCF file with normal somatic variants
+
   jumble_count:
     type: object
     description: input and output parameters for jumble_count
