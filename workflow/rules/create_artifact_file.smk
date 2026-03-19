@@ -26,7 +26,7 @@ rule create_artifact_file:
         threads=config.get("create_artifact_file", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("create_artifact_file", {}).get("time", config["default_resources"]["time"]),
     container:
-        config.get("cnvkit_create_targets", {}).get("container", config["default_container"])
+        config.get("create_artifact_file", {}).get("container", config["default_container"])
     message:
         "{rule}: create artifact PoN"
     script:
