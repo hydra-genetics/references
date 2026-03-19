@@ -50,5 +50,5 @@ rule deepsomatic_pon:
         --intermediate_results_dir {output.tmpdir} \
         --process_somatic=true \
         --regions={input.bed} \
-        {params.extra} $> {log.stdout}
+        {params.extra} &> {log.stdout}
         """
