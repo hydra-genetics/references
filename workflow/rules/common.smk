@@ -13,6 +13,7 @@ from snakemake.utils import min_version
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
+from hydra_genetics.utils.misc import get_input_aligned_bam
 
 min_version("7.8.0")
 
@@ -34,13 +35,13 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 
 ### Read and validate units file
 
-units = pandas.read_table(config["units"], dtype=str).set_index(["sample", "type"], drop=False).sort_index()
+units = pd.read_table(config["units"], dtype=str).set_index(["sample", "type"], drop=False).sort_index()
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
 
 
-def get_bams(units: pandas.DataFrame) -> typing.List[str]:
+def get_bams(units: pd.DataFrame) -> typing.List[str]:
     """
     function used to extract all bam files found in units.tsv
     Args:
@@ -52,7 +53,7 @@ def get_bams(units: pandas.DataFrame) -> typing.List[str]:
     return get_units_column(units, "bam")
 
 
-def get_bais(units: pandas.DataFrame) -> typing.List[str]:
+def get_bais(units: pd.DataFrame) -> typing.List[str]:
     """
     function used to extract all bam files found in units.tsv and add .bai to the filename
     Args:
@@ -82,7 +83,7 @@ def get_coverage_files(samples, units):
     return coverage_list
 
 
-def get_gvcfs(units: pandas.DataFrame) -> typing.List[str]:
+def get_gvcfs(units: pd.DataFrame) -> typing.List[str]:
     """
     function used to extract all gvcf files found in units.tsv
     Args:
@@ -94,7 +95,7 @@ def get_gvcfs(units: pandas.DataFrame) -> typing.List[str]:
     return get_units_column(units, "gvcf")
 
 
-def get_vcfs(units: pandas.DataFrame) -> typing.List[str]:
+def get_vcfs(units: pd.DataFrame) -> typing.List[str]:
     """
     function used to extract all vcf files found in units.tsv
     Args:
@@ -106,7 +107,7 @@ def get_vcfs(units: pandas.DataFrame) -> typing.List[str]:
     return get_units_column(units, "vcf")
 
 
-def get_cnv_vcfs(units: pandas.DataFrame) -> typing.List[str]:
+def get_cnv_vcfs(units: pd.DataFrame) -> typing.List[str]:
     """
     function used to extract all cnv.vcf files found in units.tsv
     Args:
@@ -118,7 +119,7 @@ def get_cnv_vcfs(units: pandas.DataFrame) -> typing.List[str]:
     return get_units_column(units, "cnv_vcf")
 
 
-def get_units_column(units: pandas.DataFrame, column: str) -> typing.List[str]:
+def get_units_column(units: pd.DataFrame, column: str) -> typing.List[str]:
     """
     extract a column from units.tsv
     Args:
