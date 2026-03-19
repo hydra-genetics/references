@@ -1,90 +1,99 @@
-
 import gzip
 import statistics
-import sys
 
 vcf_files = snakemake.input.vcfs
-artifact_panel = open(snakemake.output.artifact_panel, "w")
+artifact_panel_path = snakemake.output.artifact_panel
 callers_used = snakemake.params.callers
 
 FFPE_call_dict = {}
+
+
+def get_info_field(info_str, key):
+    """Safely extracts a value from the INFO field string."""
+    for field in info_str.split(";"):
+        if field.startswith(f"{key}="):
+            return field.split("=", 1)[1]
+    return None
+
+
 for file_name in vcf_files:
     FFPE_rm_dup_dict = {}
-    with gzip.open(file_name, 'rt') as infile:
-        file_content = infile.read().split("\n")
-        header = True
-        for line in file_content:
-            if header:
-                if line[:6] == "#CHROM":
-                    header = False
+    with gzip.open(file_name, "rt") as infile:
+        for line in infile:
+            if line.startswith("#"):
                 continue
+
             columns = line.strip().split("\t")
-            if len(columns) <= 1:
+            if len(columns) < 8:
                 continue
+
             chrom = columns[0]
             pos = int(columns[1])
             ref = columns[3]
             alt = columns[4]
-            variant_type = "SNV"
-            if len(ref) > 1 or len(alt) > 1:
-                variant_type = "INDEL"
-            INFO = columns[7]
-            if INFO.find("AA=") != -1:
+            variant_type = "SNV" if len(ref) == 1 and len(alt) == 1 else "INDEL"
+
+            info = columns[7]
+            if get_info_field(info, "AA") is not None:
                 continue
-            callers = INFO.split("CALLERS=")[1].split(";")[0].split(",")
-            AF = INFO.split(";AF=")
-            if len(AF) == 1:
-                AF = INFO.split("AF=")
-            AF = float(AF[1].split(";")[0])
-            key = chrom + "_" + str(pos) + "_" + variant_type
+
+            callers_str = get_info_field(info, "CALLERS")
+            if not callers_str:
+                continue
+            callers = callers_str.split(",")
+
+            af_str = get_info_field(info, "AF")
+            if not af_str:
+                continue
+            try:
+                af = float(af_str.split(",")[0])  # Handle potential multi-allelic AF
+            except (ValueError, IndexError):
+                continue
+
+            key = (chrom, pos, variant_type)
+
             if key not in FFPE_call_dict:
-                FFPE_call_dict[key] = {}
-                for caller in callers:
-                    FFPE_call_dict[key][caller] = [0, []]
+                FFPE_call_dict[key] = {c: [0, []] for c in callers}
             else:
                 for caller in callers:
                     if caller not in FFPE_call_dict[key]:
                         FFPE_call_dict[key][caller] = [0, []]
+
             if key not in FFPE_rm_dup_dict:
-                FFPE_rm_dup_dict[key] = {}
-                for caller in callers:
-                    FFPE_rm_dup_dict[key][caller] = 0
+                FFPE_rm_dup_dict[key] = {c: 0 for c in callers}
             else:
                 for caller in callers:
                     if caller not in FFPE_rm_dup_dict[key]:
                         FFPE_rm_dup_dict[key][caller] = 0
+
             for caller in callers:
                 if FFPE_rm_dup_dict[key][caller] == 0:
-                    FFPE_rm_dup_dict[key][caller] += 1
+                    FFPE_rm_dup_dict[key][caller] = 1
                     FFPE_call_dict[key][caller][0] += 1
-                    FFPE_call_dict[key][caller][1].append(AF)
-                # If multiallelic, use the variant with the highest AF
+                    FFPE_call_dict[key][caller][1].append(af)
                 else:
-                    if AF > FFPE_call_dict[key][caller][1][-1]:
-                        FFPE_call_dict[key][caller][1][-1] = AF
+                    # If multiallelic, use the variant with the highest AF
+                    if af > FFPE_call_dict[key][caller][1][-1]:
+                        FFPE_call_dict[key][caller][1][-1] = af
 
-
-artifact_panel.write("Chromosome\tpos\tvariant_type")
-for caller in callers_used:
-    artifact_panel.write("\t" + caller + "\tmedian_MAF\tsd_MAF")
-artifact_panel.write("\n")
-for key in FFPE_call_dict:
-    chrom = key.split("_")[0]
-    pos = key.split("_")[1]
-    variant_type = key.split("_")[2]
-    artifact_panel.write(chrom + "\t" + pos + "\t" + variant_type)
+with open(artifact_panel_path, "w") as artifact_panel:
+    header = ["Chromosome", "pos", "variant_type"]
     for caller in callers_used:
-        if caller not in FFPE_call_dict[key]:
-            artifact_panel.write("\t0\t0\t1000")
-        else:
-            FFPE_call_dict[key][caller][1].sort()
-            median_af = statistics.median(FFPE_call_dict[key][caller][1])
-            sd_af = 1000
-            nr_obs = len(FFPE_call_dict[key][caller][1])
-            if nr_obs >= 4:
-                '''This is the sample variance s² with Bessel’s correction, also known as variance with N-1 degrees of freedom.
-                Provided that the data points are representative (e.g. independent and identically distributed),
-                the result should be an unbiased estimate of the true population variance.'''
-                sd_af = statistics.stdev(FFPE_call_dict[key][caller][1])
-            artifact_panel.write("\t" + str(FFPE_call_dict[key][caller][0]) + "\t" + str(median_af) + "\t" + str(sd_af))
-    artifact_panel.write("\n")
+        header.extend([caller, "median_MAF", "sd_MAF"])
+    artifact_panel.write("\t".join(header) + "\n")
+
+    for key, callers_data in FFPE_call_dict.items():
+        chrom, pos, variant_type = key
+        row = [str(chrom), str(pos), str(variant_type)]
+        for caller in callers_used:
+            if caller not in callers_data:
+                row.extend(["0", "0", "1000"])
+            else:
+                obs_count, af_list = callers_data[caller]
+                af_list.sort()
+                median_af = statistics.median(af_list)
+                sd_af = 1000
+                if len(af_list) >= 4:
+                    sd_af = statistics.stdev(af_list)
+                row.extend([str(obs_count), str(median_af), str(sd_af)])
+        artifact_panel.write("\t".join(row) + "\n")

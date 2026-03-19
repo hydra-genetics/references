@@ -1,78 +1,71 @@
-
 import gzip
 import statistics
-import sys
+
 
 gvcf_files = snakemake.input.gvcfs
-background_file = open(snakemake.output.background_file, "w")
+background_file_path = snakemake.output.background_file
 min_dp = snakemake.params.min_dp
 max_af = snakemake.params.max_af
 
 background_dict = {}
 
 for file_name in gvcf_files:
-    with gzip.open(file_name, 'rt') as infile:
-        file_content = infile.read().split("\n")
-        header = True
-        for line in file_content:
-            if header:
-                if line[:6] == "#CHROM":
-                    header = False
+    with gzip.open(file_name, "rt") as infile:
+        for line in infile:
+            if line.startswith("#"):
                 continue
+
             columns = line.strip().split("\t")
-            if len(columns) <= 1:
+            if len(columns) < 10:
                 continue
-            chrom = columns[0][3:]
+
+            # Handle potential chromosome prefixes
+            chrom = columns[0]
+            if chrom.startswith("chr"):
+                chrom = chrom[3:]
+
             pos = columns[1]
-            key = chrom + "_" + pos
-            format = columns[8].split(":")
+            key = (chrom, pos)
+
+            formats = columns[8].split(":")
             data = columns[9].split(":")
-            AD_id = 0
-            for f in format:
-                if f == "AD":
-                    break
-                AD_id += 1
-            AD_info = data[AD_id].split(",")
-            ref_AD = int(AD_info[0])
-            alt_AD = 0
-            for AD in AD_info[1:]:
-                alt_AD += int(AD)
-            DP = ref_AD + alt_AD
-            alt_AF = 0.0
-            if DP > min_dp:
-                alt_AF = alt_AD / float(DP)
-            else:
-                continue
-            if alt_AF > 1 - max_af:
-                alt_AF = 1 - alt_AF
-            if alt_AF > max_af:
-                continue
-            if key in background_dict:
-                background_dict[key].append(alt_AF)
-            else:
-                background_dict[key] = [alt_AF]
 
-background_file.write("Chr\tPos\tMedian\tSD\tNrObs\n")
-for key in background_dict:
-    background_dict[key].sort()
-    nr_obs = len(background_dict[key])
-    if nr_obs >= 4:
-        median_background = statistics.median(background_dict[key])
-        '''This is the sample variance s² with Bessel’s correction, also known as variance with N-1 degrees of freedom.
-        Provided that the data points are representative (e.g. independent and identically distributed),
-        the result should be an unbiased estimate of the true population variance.'''
-        stdev_background = statistics.stdev(background_dict[key])
-        background_file.write(
-            key.split("_")[0]
-            + "\t"
-            + key.split("_")[1]
-            + "\t"
-            + str(median_background)
-            + "\t"
-            + str(stdev_background)
-            + "\t"
-            + str(nr_obs)
-            + "\n"
-        )
+            try:
+                ad_idx = formats.index("AD")
+                ad_info = data[ad_idx].split(",")
 
-background_file.close()
+                ref_ad = int(ad_info[0])
+                alt_ad = sum(int(ad) for ad in ad_info[1:])
+                dp = ref_ad + alt_ad
+
+                if dp <= min_dp:
+                    continue
+
+                alt_af = alt_ad / float(dp)
+
+                # Check if it's potentially a homozygous variant being filtered
+                if alt_af > 1 - max_af:
+                    alt_af = 1 - alt_af
+
+                if alt_af > max_af:
+                    continue
+
+                if key in background_dict:
+                    background_dict[key].append(alt_af)
+                else:
+                    background_dict[key] = [alt_af]
+            except (ValueError, IndexError):
+                # Skip if AD field or index is missing/malformed
+                continue
+
+with open(background_file_path, "w") as background_file:
+    background_file.write("Chr\tPos\tMedian\tSD\tNrObs\n")
+    for key, af_list in background_dict.items():
+        if len(af_list) < 4:
+            continue
+
+        median_background = statistics.median(af_list)
+        stdev_background = statistics.stdev(af_list)
+
+        chrom, pos = key
+        background_file.write(f"{chrom}\t{pos}\t{median_background}\t{stdev_background}\t{len(af_list)}\n")

@@ -28,7 +28,7 @@ rule exomedepth_bam_list:
     message:
         "{rule}: make a bam list file for purecn coverage"
     shell:
-        "(for val in {input.bam_list}; do echo $val >> {output.bam_list_file}; done) &> {log}"
+        "printf '%s\n' {input.bam_list} > {output.bam_list_file} 2> {log}"
 
 
 rule exomedepth_reference:
