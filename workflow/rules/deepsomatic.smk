@@ -6,8 +6,8 @@ __license__ = "GPL-3"
 
 rule deepsomatic_pon:
     input:
-        bam=get_bams(units),
-        bai=get_bais(units),
+        bam=lambda wildcards: get_input_aligned_bam(wildcards, config)[0],
+        bai=lambda wildcards: get_input_aligned_bam(wildcards, config)[1],
         ref=config.get("reference", {}).get("fasta", ""),
         bed=config.get("reference", {}).get("design_bed", ""),
     output:
