@@ -7,26 +7,18 @@ properties:
   type:
     type: string
     description: type of sample (N|T|R)
-  run:
+  bam:
     type: string
-    description: sequencing run id
-  lane:
+    description: absolute path to bam file
+  vcf:
     type: string
-    description: lane number
-  fastq1:
+    description: absolute path to merged vcf files from different callers
+  gvcf:
     type: string
-    description: absolute path to R1 fastq file
-  fastq2:
+    description: absolute path to gvcf file
+  cnv_vcf:
     type: string
-    description: absolute path to R2 fastq file
-  adapter:
-    type: string
-    description: one or more sequence, separated by ","
+    description: absolute path to cnv.vcf file
 required:
   - sample
   - type
-  - run
-  - lane
-  - fastq1
-  - fastq2
-  - adapter

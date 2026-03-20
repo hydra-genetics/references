@@ -2,4 +2,70 @@ resources: "resources.yaml"
 samples: "samples.tsv"
 units: "units.tsv"
 
-default_container: "docker://marrip/common:1.1.0"
+default_container: "docker://hydragenetics/common:0.1.9"
+
+reference:
+  fasta:  "reference/HES45.fna"
+  dict: "reference/HES45.dict"
+  design_bed: "reference/twist_DNA_solid.chr1.annotated.bed"
+  mappability: "reference/access-5k-mappable.hg19.bed"
+
+create_artifact_file:
+  callers:
+    - "vardict"
+    - "mutect2"
+    - "varscan"
+    - "freebayes"
+
+cnvkit_create_targets:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+cnvkit_create_anti_targets:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+cnvkit_build_normal_reference:
+  container: "docker://hydragenetics/cnvkit:0.9.9"
+
+bed_to_interval_list:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+preprocess_intervals:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+collect_read_counts:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+create_read_count_panel_of_normals:
+  container: "docker://hydragenetics/gatk4:4.2.2.0"
+
+exomedepth_reference:
+  container: "docker://hydragenetics/exomedepth:1.1.15"
+
+jumble_count:
+  container: "docker://hydragenetics/jumble:240530"
+
+jumble_reference:
+  container: "docker://hydragenetics/jumble:240530"
+  annotation: "reference/jumble_dummy_annotation.txt"
+
+msisensor_pro_scan:
+  container: "docker://hydragenetics/msisensor_pro:1.2.0"
+
+msisensor_pro_baseline:
+  container: "docker://hydragenetics/msisensor_pro:1.2.0"
+
+svdb_build:
+  container: "docker://hydragenetics/svdb:2.5.0"
+
+svdb_export:
+  container: "docker://hydragenetics/svdb:2.5.0"
+
+purecn_coverage:
+  container: "docker://hydragenetics/purecn:2.2.0"
+  intervals: "reference/purecn_dummy_intervals.txt"
+
+purecn_normal_db:
+  container: "docker://hydragenetics/purecn:2.2.0"
+
+purecn_interval_file:
+  container: "docker://hydragenetics/purecn:2.2.0"
