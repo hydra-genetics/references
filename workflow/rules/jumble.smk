@@ -47,7 +47,6 @@ rule jumble_reference:
         annotation=config.get("jumble_reference", {}).get("annotation", ""),
         bed=config.get("reference", {}).get("design_bed", ""),
         input_dir=lambda wildcards, input: os.path.dirname(input[0]),
-        output_dir=lambda wildcards, output: os.path.dirname(output[0]),
     log:
         "references/jumble_reference/%s.reference.RDS.output.log"
         % config.get("reference", {}).get("design_bed", "").split("/")[-1],
@@ -72,5 +71,5 @@ rule jumble_reference:
         "(Rscript /Jumble/jumble-reference.R "
         "-i {params.input_dir} "
         "-a {params.annotation} "
-        "-o {params.output_dir} "
+        "-o {output.PoN} "
         "-c {threads}) &> {log}"
