@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.1](https://github.com/hydra-genetics/references/compare/v1.0.0...v1.0.1) (2026-04-24)
+
+
+### Bug Fixes
+
+* adapt to new jumble version ([cf8f17d](https://github.com/hydra-genetics/references/commit/cf8f17d0793f7da17807a40509baffaf985e0c7b))
+* adapt to new jumble version ([dbbab9f](https://github.com/hydra-genetics/references/commit/dbbab9f9ad1f0519a6ef627eceba99d8e3ab6f1b))
+* upd input function in deepsomatic_pon ([ed6a459](https://github.com/hydra-genetics/references/commit/ed6a45953ba93ee42a603bf51150f07d4fea6ca8))
+* update input function in deepsomatic_pon ([110fef6](https://github.com/hydra-genetics/references/commit/110fef6fcd47b27da11b53628bbeadcbc3806995))
+
 ## 1.0.0 (2026-03-20)
 
 
