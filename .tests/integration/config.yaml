@@ -42,10 +42,10 @@ exomedepth_reference:
   container: "docker://hydragenetics/exomedepth:1.1.15"
 
 jumble_count:
-  container: "docker://hydragenetics/jumble:240530"
+  container: "docker://hydragenetics/jumble:0.5.0"
 
 jumble_reference:
-  container: "docker://hydragenetics/jumble:240530"
+  container: "docker://hydragenetics/jumble:0.5.0"
   annotation: "reference/jumble_dummy_annotation.txt"
 
 msisensor_pro_scan:
