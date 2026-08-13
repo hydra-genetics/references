@@ -31,7 +31,12 @@ for file_name in vcf_files:
             pos = int(columns[1])
             ref = columns[3]
             alt = columns[4]
-            variant_type = "SNV" if len(ref) == 1 and len(alt) == 1 else "INDEL"
+            if len(ref) == 1 and len(alt) == 1:
+                variant_type = f"{ref}>{alt}"
+            elif len(alt) > len(ref):
+                variant_type = "insertion"
+            else:
+                variant_type = "deletion"
 
             info = columns[7]
             if get_info_field(info, "AA") is not None:
