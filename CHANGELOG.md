@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/hydra-genetics/references/compare/v1.0.1...v1.1.0) (2026-08-13)
+
+
+### Features
+
+* make artifact_PoN variant specific for SNVs and split INDELs in… ([c2002d3](https://github.com/hydra-genetics/references/commit/c2002d3f54657acd476dde55292a9b12c0156051))
+* make artifact_PoN variant specific for SNVs and split INDELs into del and ins ([c2df12a](https://github.com/hydra-genetics/references/commit/c2df12a7afd821441020142a9d812f96148f6f0d))
+
 ## [1.0.1](https://github.com/hydra-genetics/references/compare/v1.0.0...v1.0.1) (2026-04-24)
 
 
