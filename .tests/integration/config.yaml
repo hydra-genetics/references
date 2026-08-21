@@ -55,7 +55,6 @@ ichorcna_offtarget_panel_of_normals:
   centromere: "reference/ichorcna_dummy_centromere.txt"
   chrs: 'c("1")'
   chr_normalize: 'c("1")'
-  genome_style: "UCSC"
 
 jumble_count:
   container: "docker://hydragenetics/jumble:0.5.0"

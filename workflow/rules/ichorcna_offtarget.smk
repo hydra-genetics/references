@@ -86,7 +86,11 @@ rule ichorcna_offtarget_panel_of_normals:
         outfile=lambda wildcards, output: output.pon[: -len("_%s.rds" % _ichorcna_offtarget_pon_method)],
         chrs=config.get("ichorcna_offtarget_panel_of_normals", {}).get("chrs", 'c(1:22,"X")'),
         chr_normalize=config.get("ichorcna_offtarget_panel_of_normals", {}).get("chr_normalize", "c(1:22)"),
-        genome_style=config.get("ichorcna_offtarget_panel_of_normals", {}).get("genome_style", "UCSC"),
+        # createPanelOfNormals.R never forwards --genomeStyle to its own call to
+        # loadReadCountsFromWig(), which defaults to NCBI internally regardless -
+        # sample counts get force-converted to NCBI style no matter what is passed
+        # here. Defaulting to NCBI keeps chrs/centromere consistent with that.
+        genome_style=config.get("ichorcna_offtarget_panel_of_normals", {}).get("genome_style", "NCBI"),
         method=_ichorcna_offtarget_pon_method,
         extra=config.get("ichorcna_offtarget_panel_of_normals", {}).get("extra", ""),
     log:
