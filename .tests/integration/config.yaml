@@ -41,6 +41,22 @@ create_read_count_panel_of_normals:
 exomedepth_reference:
   container: "docker://hydragenetics/exomedepth:1.1.15"
 
+ichorcna_offtarget_read_counter:
+  container: "docker://hydragenetics/ichorcna:v260817"
+  chrs: "chr1"
+
+ichorcna_offtarget_wig_list:
+  container: "docker://hydragenetics/ichorcna:v260817"
+
+ichorcna_offtarget_panel_of_normals:
+  container: "docker://hydragenetics/ichorcna:v260817"
+  gc_wig: "reference/ichorcna_dummy_gc.wig"
+  map_wig: "reference/ichorcna_dummy_map.wig"
+  centromere: "reference/ichorcna_dummy_centromere.txt"
+  chrs: 'c("1")'
+  chr_normalize: 'c("1")'
+  genome_style: "UCSC"
+
 jumble_count:
   container: "docker://hydragenetics/jumble:0.5.0"
 

@@ -159,6 +159,72 @@ properties:
         type: string
         description: extra parameters sent to exomedepth_reference
 
+  ichorcna_offtarget_read_counter:
+    type: object
+    description: parameters for ichorcna_offtarget_read_counter
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      chrs:
+        type: string
+        description: comma-separated list of chromosomes to count reads in
+      window:
+        type: integer
+        description: bin size in bp used by HMMcopy readCounter
+      quality:
+        type: integer
+        description: minimum mapping quality for a read to be counted
+
+  ichorcna_offtarget_wig_list:
+    type: object
+    description: parameters for ichorcna_offtarget_wig_list
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+
+  ichorcna_offtarget_panel_of_normals:
+    type: object
+    description: parameters for ichorcna_offtarget_panel_of_normals
+    properties:
+      benchmark_repeats:
+        type: integer
+        description: set number of times benchmark should be repeated
+      container:
+        type: string
+        description: name or path to docker/singularity container
+      gc_wig:
+        type: string
+        description: path to GC-content wig file for the reference genome
+      map_wig:
+        type: string
+        description: path to mappability score wig file for the reference genome
+      centromere:
+        type: string
+        description: path to file containing centromere locations
+      chrs:
+        type: string
+        description: chromosomes to analyze, as an R vector expression
+      chr_normalize:
+        type: string
+        description: chromosomes to normalize GC/mappability biases on, as an R vector expression
+      genome_style:
+        type: string
+        description: NCBI or UCSC chromosome naming convention
+      method:
+        type: string
+        description: median or mean, method used to summarize the normal cohort's per-bin values
+      extra:
+        type: string
+        description: extra parameters sent to createPanelOfNormals.R
+
   jumble_count:
     type: object
     description: parameters for jumble_count
