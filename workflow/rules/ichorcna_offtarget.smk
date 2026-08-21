@@ -28,7 +28,9 @@ rule ichorcna_offtarget_read_counter:
     threads: config.get("ichorcna_offtarget_read_counter", {}).get("threads", config["default_resources"]["threads"])
     resources:
         mem_mb=config.get("ichorcna_offtarget_read_counter", {}).get("mem_mb", config["default_resources"]["mem_mb"]),
-        mem_per_cpu=config.get("ichorcna_offtarget_read_counter", {}).get("mem_per_cpu", config["default_resources"]["mem_per_cpu"]),
+        mem_per_cpu=config.get("ichorcna_offtarget_read_counter", {}).get(
+            "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
+        ),
         partition=config.get("ichorcna_offtarget_read_counter", {}).get("partition", config["default_resources"]["partition"]),
         threads=config.get("ichorcna_offtarget_read_counter", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("ichorcna_offtarget_read_counter", {}).get("time", config["default_resources"]["time"]),
@@ -100,7 +102,9 @@ rule ichorcna_offtarget_panel_of_normals:
         mem_per_cpu=config.get("ichorcna_offtarget_panel_of_normals", {}).get(
             "mem_per_cpu", config["default_resources"]["mem_per_cpu"]
         ),
-        partition=config.get("ichorcna_offtarget_panel_of_normals", {}).get("partition", config["default_resources"]["partition"]),
+        partition=config.get("ichorcna_offtarget_panel_of_normals", {}).get(
+            "partition", config["default_resources"]["partition"]
+        ),
         threads=config.get("ichorcna_offtarget_panel_of_normals", {}).get("threads", config["default_resources"]["threads"]),
         time=config.get("ichorcna_offtarget_panel_of_normals", {}).get("time", config["default_resources"]["time"]),
     container:
