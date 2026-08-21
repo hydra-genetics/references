@@ -115,8 +115,8 @@ rule ichorcna_offtarget_panel_of_normals:
         "--gcWig {input.gc_wig} "
         "--mapWig {input.map_wig} "
         "--centromere {input.centromere} "
-        '--chrs "{params.chrs}" '
-        '--chrNormalize "{params.chr_normalize}" '
+        "--chrs '{params.chrs}' "
+        "--chrNormalize '{params.chr_normalize}' "
         "--genomeStyle {params.genome_style} "
         "--method {params.method} "
         "{params.extra} "
