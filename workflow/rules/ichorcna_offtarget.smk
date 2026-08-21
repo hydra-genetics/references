@@ -76,14 +76,19 @@ rule ichorcna_offtarget_panel_of_normals:
     input:
         wig_list_file="references/ichorcna_offtarget_wig_list/wig_files.list",
         wig_files=get_ichorcna_wigs(samples, units),
-        gc_wig=config.get("ichorcna_offtarget_panel_of_normals", {}).get("gc_wig", ""),
-        map_wig=config.get("ichorcna_offtarget_panel_of_normals", {}).get("map_wig", ""),
-        centromere=config.get("ichorcna_offtarget_panel_of_normals", {}).get("centromere", ""),
     output:
         pon="references/ichorcna_offtarget_panel_of_normals/ichorcna_offtarget_PoN_%s.rds" % _ichorcna_offtarget_pon_method,
         txt="references/ichorcna_offtarget_panel_of_normals/ichorcna_offtarget_PoN_%s.txt" % _ichorcna_offtarget_pon_method,
     params:
         outfile=lambda wildcards, output: output.pon[: -len("_%s.rds" % _ichorcna_offtarget_pon_method)],
+        # gc_wig/map_wig/centromere are params, not input: they're often paths
+        # bundled inside the container (e.g. /opt/ichorCNA/inst/extdata/...),
+        # which don't exist on the host filesystem Snakemake itself checks
+        # against - declaring them as input made dry-run/DAG-building fail
+        # with a false "missing input file" for any such path.
+        gc_wig=config.get("ichorcna_offtarget_panel_of_normals", {}).get("gc_wig", ""),
+        map_wig=config.get("ichorcna_offtarget_panel_of_normals", {}).get("map_wig", ""),
+        centromere=config.get("ichorcna_offtarget_panel_of_normals", {}).get("centromere", ""),
         chrs=config.get("ichorcna_offtarget_panel_of_normals", {}).get("chrs", 'c(1:22,"X")'),
         chr_normalize=config.get("ichorcna_offtarget_panel_of_normals", {}).get("chr_normalize", "c(1:22)"),
         # createPanelOfNormals.R never forwards --genomeStyle to its own call to
@@ -116,9 +121,9 @@ rule ichorcna_offtarget_panel_of_normals:
     shell:
         "(Rscript /opt/ichorCNA/scripts/createPanelOfNormals.R "
         "--filelist {input.wig_list_file} "
-        "--gcWig {input.gc_wig} "
-        "--mapWig {input.map_wig} "
-        "--centromere {input.centromere} "
+        "--gcWig {params.gc_wig} "
+        "--mapWig {params.map_wig} "
+        "--centromere {params.centromere} "
         "--chrs '{params.chrs}' "
         "--chrNormalize '{params.chr_normalize}' "
         "--genomeStyle {params.genome_style} "
