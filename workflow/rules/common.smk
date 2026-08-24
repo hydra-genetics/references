@@ -74,6 +74,15 @@ def get_counts(samples, units):
     return count_list
 
 
+def get_ichorcna_wigs(samples, units):
+    wig_list = [
+        "references/ichorcna_offtarget_read_counter/%s_%s.wig" % (sample, unit_type)
+        for sample in get_samples(samples)
+        for unit_type in get_unit_types(units, sample)
+    ]
+    return wig_list
+
+
 def get_coverage_files(samples, units):
     coverage_list = [
         "references/purecn_coverage/%s_%s_coverage_loess.txt.gz" % (sample, unit_type)
@@ -154,4 +163,5 @@ def compile_output_list(wildcards):
         # "references/purecn_normal_db/output/mapping_bias.rds",
         # "references/purecn_interval_file/targets_intervals.txt",
         # "references/jumble_reference/twist_DNA_solid.chr1.annotated.bed.reference.RDS",
+        # "references/ichorcna_offtarget_panel_of_normals/ichorcna_offtarget_PoN_median.rds",
     ]
