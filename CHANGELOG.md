@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.2.0](https://github.com/hydra-genetics/references/compare/v1.1.0...v1.2.0) (2026-08-24)
+
+
+### Features
+
+* ichorCNA PoN rules ([a38f238](https://github.com/hydra-genetics/references/commit/a38f2387dd3573772a4e27b330e32c277d3b2c77))
+* ichorCNA PoN rules ([ab209c2](https://github.com/hydra-genetics/references/commit/ab209c2a708c5ea329bb63fc637f70f27fbb590c))
+
+
+### Bug Fixes
+
+* chromosome style ([51c33d8](https://github.com/hydra-genetics/references/commit/51c33d8e4f8a0bd88bd62c6889458384f978280f))
+* double-quotes bugfix ([0b8fa7e](https://github.com/hydra-genetics/references/commit/0b8fa7e45fb0708e6667ddc96bbce3b13a923c50))
+* input moved to config ([bfaa71c](https://github.com/hydra-genetics/references/commit/bfaa71c960cafa1bf1400233a5cc476e6a2bd574))
+* review comments ([b033d47](https://github.com/hydra-genetics/references/commit/b033d47d3c769206322ff96fe4bde1d5bf6b1999))
+
 ## [1.1.0](https://github.com/hydra-genetics/references/compare/v1.0.1...v1.1.0) (2026-08-13)
 
 
