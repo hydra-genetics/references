@@ -16,6 +16,12 @@ rule ichorcna_offtarget_read_counter:
             "chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,"
             "chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX",
         ),
+        # window must match the bin size actually baked into whichever gc_wig/map_wig
+        # get configured downstream (ichorcna_offtarget_run/panel_of_normals), or
+        # loadReadCountsFromWig() hits a length mismatch assigning gc/map values onto
+        # this rule's read counts. ichorCNA's own bundled wigs only ship at 10/50/500/
+        # 1000kb - this 100kb default has no matching bundled file and requires a
+        # custom-generated gc_wig/map_wig at the same 100kb bin size (see docs).
         window=config.get("ichorcna_offtarget_read_counter", {}).get("window", 100000),
         quality=config.get("ichorcna_offtarget_read_counter", {}).get("quality", 20),
     log:
@@ -90,6 +96,10 @@ rule ichorcna_offtarget_panel_of_normals:
         map_wig=config.get("ichorcna_offtarget_panel_of_normals", {}).get("map_wig", ""),
         centromere=config.get("ichorcna_offtarget_panel_of_normals", {}).get("centromere", ""),
         chrs=config.get("ichorcna_offtarget_panel_of_normals", {}).get("chrs", 'c(1:22,"X")'),
+        # chr_normalize is a no-op: createPanelOfNormals.R parses and re-styles it but
+        # never forwards it to loadReadCountsFromWig(), which always uses its own
+        # hardcoded default (c(1:22, "X", "Y")) instead. Kept in case a future
+        # ichorCNA version fixes this upstream.
         chr_normalize=config.get("ichorcna_offtarget_panel_of_normals", {}).get("chr_normalize", "c(1:22)"),
         # createPanelOfNormals.R never forwards --genomeStyle to its own call to
         # loadReadCountsFromWig(), which defaults to NCBI internally regardless -
@@ -121,9 +131,9 @@ rule ichorcna_offtarget_panel_of_normals:
     shell:
         "(Rscript /opt/ichorCNA/scripts/createPanelOfNormals.R "
         "--filelist {input.wig_list_file} "
-        "--gcWig {params.gc_wig} "
-        "--mapWig {params.map_wig} "
-        "--centromere {params.centromere} "
+        '--gcWig "{params.gc_wig}" '
+        '--mapWig "{params.map_wig}" '
+        '--centromere "{params.centromere}" '
         "--chrs '{params.chrs}' "
         "--chrNormalize '{params.chr_normalize}' "
         "--genomeStyle {params.genome_style} "

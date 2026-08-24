@@ -174,7 +174,12 @@ properties:
         description: comma-separated list of chromosomes to count reads in
       window:
         type: integer
-        description: bin size in bp used by HMMcopy readCounter
+        description: >-
+          Bin size in bp used by HMMcopy readCounter. Must match the bin size actually
+          baked into whichever gc_wig/map_wig get configured downstream, or R hits a
+          length mismatch. ichorCNA's own bundled wigs only ship at 10/50/500/1000kb -
+          this rule's 100kb default has no matching bundled file and requires a
+          custom-generated gc_wig/map_wig at the same bin size.
       quality:
         type: integer
         description: minimum mapping quality for a read to be counted
@@ -214,13 +219,27 @@ properties:
         description: chromosomes to analyze, as an R vector expression
       chr_normalize:
         type: string
-        description: chromosomes to normalize GC/mappability biases on, as an R vector expression
+        description: >-
+          Chromosomes to normalize GC/mappability biases on, as an R vector expression.
+          Currently has no effect: createPanelOfNormals.R parses and re-styles this value
+          but never forwards it to loadReadCountsFromWig(), which always uses its own
+          hardcoded default (c(1:22, "X", "Y")) instead. Kept here in case a future
+          ichorCNA version fixes this upstream.
       genome_style:
         type: string
-        description: NCBI or UCSC chromosome naming convention
+        description: >-
+          NCBI or UCSC chromosome naming convention. Must be "NCBI": createPanelOfNormals.R
+          never forwards this to its own call to loadReadCountsFromWig(), which defaults to
+          NCBI internally regardless, so sample counts always end up NCBI-styled - setting
+          "UCSC" here only re-styles chrs/centromere, leaving them mismatched against the
+          NCBI-styled counts, and keepChr(counts, chrs) then retains zero bins.
       method:
         type: string
-        description: median or mean, method used to summarize the normal cohort's per-bin values
+        enum: [median, mean]
+        description: >-
+          Method used to summarize the normal cohort's per-bin values. Must be exactly
+          "median" or "mean" (lowercase) - createPanelOfNormals.R does an exact,
+          case-sensitive string match and stops on anything else.
       extra:
         type: string
         description: extra parameters sent to createPanelOfNormals.R
