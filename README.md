@@ -2,13 +2,7 @@
 
 Creation of references, PoN, and background
 
-![Lint](https://github.com/hydra-genetics/references/actions/workflows/lint.yaml/badge.svg?branch=develop)
-![Snakefmt](https://github.com/hydra-genetics/references/actions/workflows/snakefmt.yaml/badge.svg?branch=develop)
-
-![pycodestyle](https://github.com/hydra-genetics/references/actions/workflows/pycodestyl.yaml/badge.svg?branch=develop)
-![pytest](https://github.com/hydra-genetics/references/actions/workflows/pytest.yaml/badge.svg?branch=develop)
-
-![integration test](https://github.com/hydra-genetics/references/actions/workflows/integration1.yaml/badge.svg?branch=develop)
+![CI](https://github.com/hydra-genetics/references/actions/workflows/ci.yaml/badge.svg?branch=develop)
 
 [![License: GPL-3](https://img.shields.io/badge/License-GPL3-yellow.svg)](https://opensource.org/licenses/gpl-3.0.html)
 
@@ -18,9 +12,9 @@ Creation of references, PoN, and background
 
 To run this workflow, the following tools need to be available:
 
-![python](https://img.shields.io/badge/python-3.8-blue)
-[![snakemake](https://img.shields.io/badge/snakemake-6.8.0-blue)](https://snakemake.readthedocs.io/en/stable/)
-[![singularity](https://img.shields.io/badge/singularity-3.7-blue)](https://sylabs.io/docs/)
+![python](https://img.shields.io/badge/python-3.12-blue)
+[![snakemake](https://img.shields.io/badge/snakemake-9.0.0-blue)](https://snakemake.readthedocs.io/en/stable/)
+[![apptainer](https://img.shields.io/badge/apptainer-1.4.5-blue)](https://apptainer.org/)
 
 ## :school_satchel: Preparations
 
@@ -40,7 +34,7 @@ The workflow repository contains a small test dataset `.tests/integration` which
 
 ```bash
 cd .tests/integration
-snakemake -s ../../Snakefile -j1 --use-singularity
+snakemake -s ../../workflow/Snakefile -j1 --configfile config.yaml --software-deployment-method apptainer
 ```
 
 ## :rocket: Usage
@@ -49,7 +43,7 @@ The workflow is designed for WGS data meaning huge datasets which require a lot 
 HPC clusters, it is recommended to use a cluster profile and run something like:
 
 ```bash
-snakemake -s /path/to/Snakefile --profile my-awesome-profile
+snakemake -s /path/to/workflow/Snakefile --profile my-awesome-profile
 ```
 
 ## :judge: Rule Graph

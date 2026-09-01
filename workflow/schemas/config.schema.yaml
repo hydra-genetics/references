@@ -1,4 +1,4 @@
-$schema: "http://json-schema.org/draft-04/schema#"
+$schema: "https://json-schema.org/draft/2020-12/schema"
 description: snakemake configuration file
 type: object
 properties:
@@ -21,12 +21,6 @@ properties:
       mappability:
         type: string
         description: path to fasta mappability file
-  required:
-    - samples
-    - units
-    - resources
-    - default_container
-
   bcftools_merge:
     type: object
     properties:
@@ -387,3 +381,9 @@ properties:
       extra:
         type: string
         description: extra parameters sent to svdb_export
+
+required:
+  - samples
+  - units
+  - resources
+  - default_container

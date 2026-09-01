@@ -6,6 +6,11 @@ __copyright__ = "Copyright 2021, Jonas A"
 __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
+import os
+import re
+import sys
+import typing
+
 import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
@@ -15,7 +20,7 @@ from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.misc import get_input_aligned_bam
 
-min_version("7.8.0")
+min_version("9.0.0")
 
 ### Set and validate config file
 
@@ -145,8 +150,8 @@ def get_units_column(units: pd.DataFrame, column: str) -> typing.List[str]:
 
 
 wildcard_constraints:
-    sample="|".join(samples.index),
-    unit="N|T|R",
+    sample="|".join(re.escape(s) for s in samples.index),
+    type="N|T|R",
 
 
 # Output files commented out as they do not work in integration testing using small files
