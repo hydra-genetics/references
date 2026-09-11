@@ -12,6 +12,7 @@ import sys
 import typing
 
 import pandas as pd
+from snakemake.exceptions import WorkflowError
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
@@ -44,6 +45,56 @@ units = pd.read_table(config["units"], dtype=str).set_index(["sample", "type"], 
 validate(units, schema="../schemas/units.schema.yaml")
 
 ### Set wildcard constraints
+
+
+# Sentinel separating "no default given, so this entry is required" from a default of
+# None, [] or "", each of which is a value a caller may legitimately want back.
+_REQUIRED = object()
+
+
+def get_config_value(*keys, default=_REQUIRED):
+    """
+    Fetch a value from the config, failing with a message that names the missing entry.
+
+    Defaulting to "" is not usable here: an empty string reaches Snakemake either as
+    a rule input, where it aborts with a MissingInputException that lists no file, or
+    as a params value, where it silently produces a malformed shell command. Call this
+    from an input/params function so the check stays lazy -- a workflow that never uses
+    the rule does not have to configure it.
+
+    Pass default=[] for an input file that the rule can run without. Snakemake reads an
+    empty list as "no file", which is what "" was never able to express. Without a
+    default the entry is required, and a missing or blank one raises.
+    """
+    value = config
+    for i, key in enumerate(keys):
+        if not isinstance(value, dict) or key not in value:
+            if default is not _REQUIRED:
+                return default
+            missing = ":".join(keys[: i + 1])
+            raise WorkflowError(f"references: missing config entry '{missing}', required by the rule being run")
+        value = value[key]
+
+    if not isinstance(value, str) or not value.strip():
+        if default is not _REQUIRED:
+            return default
+        name = ":".join(keys)
+        raise WorkflowError(f"references: config entry '{name}' must be a non-empty string, got {repr(value)}")
+
+    return value
+
+
+def design_bed_basename():
+    """
+    Basename of the design bed, used to name the PoN artefacts.
+
+    Several rules build output, log and benchmark paths from this, and those must resolve
+    at parse time, so this cannot raise the way get_config_value does -- a workflow that
+    never builds a PoN must still be able to parse those rules. An unset design_bed
+    therefore still yields "" here; config.schema.yaml constrains the value, and the
+    matching input/params entries go through get_config_value and fail loudly.
+    """
+    return config.get("reference", {}).get("design_bed", "").split("/")[-1]
 
 
 def get_bams(units: pd.DataFrame) -> typing.List[str]:

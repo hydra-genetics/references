@@ -6,13 +6,11 @@ __license__ = "GPL3"
 
 rule bed_to_interval_list:
     input:
-        bed=config.get("reference", {}).get("design_bed", ""),
-        ref=config.get("reference", {}).get("fasta", ""),
-        ref_dict=config.get("reference", {}).get("dict", ""),
+        bed=lambda wildcards: get_config_value("reference", "design_bed"),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
+        ref_dict=lambda wildcards: get_config_value("reference", "dict"),
     output:
-        temp(
-            "references/bed_to_interval_list/%s.interval_list" % config.get("reference", {}).get("design_bed", "").split("/")[-1]
-        ),
+        temp("references/bed_to_interval_list/%s.interval_list" % design_bed_basename()),
     log:
         "references/bed_to_interval_list/bed_to_interval_list.output.log",
     benchmark:
@@ -37,14 +35,10 @@ rule bed_to_interval_list:
 
 rule preprocess_intervals:
     input:
-        ref=config.get("reference", {}).get("fasta", ""),
-        intervalList="references/bed_to_interval_list/%s.interval_list"
-        % config.get("reference", {}).get("design_bed", "").split("/")[-1],
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
+        intervalList="references/bed_to_interval_list/%s.interval_list" % design_bed_basename(),
     output:
-        temp(
-            "references/preprocess_intervals/%s.preprocessed.interval_list"
-            % config.get("reference", {}).get("design_bed", "").split("/")[-1]
-        ),
+        temp("references/preprocess_intervals/%s.preprocessed.interval_list" % design_bed_basename()),
     params:
         bin_length=config.get("preprocess_intervals", {}).get("bin_length", "0"),  # WGS 1000 Exomes/target: 0
         padding=config.get("preprocess_intervals", {}).get("padding", "250"),  # WGS 0 Exomes/target: 250
@@ -77,8 +71,7 @@ rule collect_read_counts:
     input:
         bam=lambda wildcards: get_units(units, wildcards)[0].bam,
         bai=lambda wildcards: "%s.bai" % get_units(units, wildcards)[0].bam,
-        interval="references/preprocess_intervals/%s.preprocessed.interval_list"
-        % config.get("reference", {}).get("design_bed", "").split("/")[-1],
+        interval="references/preprocess_intervals/%s.preprocessed.interval_list" % design_bed_basename(),
     output:
         temp("references/collect_read_counts/{sample}_{type}.counts.hdf5"),
     params:

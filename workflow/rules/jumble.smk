@@ -11,7 +11,7 @@ rule jumble_count:
     output:
         counts=temp("references/jumble_count/{sample}_{type}.bam.counts.RDS"),
     params:
-        bed=config.get("reference", {}).get("design_bed", ""),
+        bed=lambda wildcards: get_config_value("reference", "design_bed"),
         output_tmp=lambda wildcards, output: os.path.basename(output[0]),
     log:
         "references/jumble_count/{sample}_{type}.bam.counts.RDS.output.log",
@@ -42,18 +42,16 @@ rule jumble_reference:
     input:
         count_files=get_counts(samples, units),
     output:
-        PoN="references/jumble_reference/%s.reference.RDS" % config.get("reference", {}).get("design_bed", "").split("/")[-1],
+        PoN="references/jumble_reference/%s.reference.RDS" % design_bed_basename(),
     params:
-        annotation=config.get("jumble_reference", {}).get("annotation", ""),
-        bed=config.get("reference", {}).get("design_bed", ""),
+        annotation=lambda wildcards: get_config_value("jumble_reference", "annotation"),
+        bed=lambda wildcards: get_config_value("reference", "design_bed"),
         input_dir=lambda wildcards, input: os.path.dirname(input[0]),
     log:
-        "references/jumble_reference/%s.reference.RDS.output.log"
-        % config.get("reference", {}).get("design_bed", "").split("/")[-1],
+        "references/jumble_reference/%s.reference.RDS.output.log" % design_bed_basename(),
     benchmark:
         repeat(
-            f"references/jumble_reference/%s.reference.RDS.output.benchmark.tsv"
-            % config.get("reference", {}).get("design_bed", "").split("/")[-1],
+            f"references/jumble_reference/%s.reference.RDS.output.benchmark.tsv" % design_bed_basename(),
             config.get("jumble_reference", {}).get("benchmark_repeats", 1),
         )
     threads: config.get("jumble_reference", {}).get("threads", config["default_resources"]["threads"])
