@@ -12,10 +12,10 @@ import sys
 import typing
 
 import pandas as pd
-from snakemake.exceptions import WorkflowError
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
+from hydra_genetics.utils.config import config_accessor
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
@@ -44,44 +44,9 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 units = pd.read_table(config["units"], dtype=str).set_index(["sample", "type"], drop=False).sort_index()
 validate(units, schema="../schemas/units.schema.yaml")
 
+get_config_value = config_accessor(config, module="references")
+
 ### Set wildcard constraints
-
-
-# Sentinel separating "no default given, so this entry is required" from a default of
-# None, [] or "", each of which is a value a caller may legitimately want back.
-_REQUIRED = object()
-
-
-def get_config_value(*keys, default=_REQUIRED):
-    """
-    Fetch a value from the config, failing with a message that names the missing entry.
-
-    Defaulting to "" is not usable here: an empty string reaches Snakemake either as
-    a rule input, where it aborts with a MissingInputException that lists no file, or
-    as a params value, where it silently produces a malformed shell command. Call this
-    from an input/params function so the check stays lazy -- a workflow that never uses
-    the rule does not have to configure it.
-
-    Pass default=[] for an input file that the rule can run without. Snakemake reads an
-    empty list as "no file", which is what "" was never able to express. Without a
-    default the entry is required, and a missing or blank one raises.
-    """
-    value = config
-    for i, key in enumerate(keys):
-        if not isinstance(value, dict) or key not in value:
-            if default is not _REQUIRED:
-                return default
-            missing = ":".join(keys[: i + 1])
-            raise WorkflowError(f"references: missing config entry '{missing}', required by the rule being run")
-        value = value[key]
-
-    if not isinstance(value, str) or not value.strip():
-        if default is not _REQUIRED:
-            return default
-        name = ":".join(keys)
-        raise WorkflowError(f"references: config entry '{name}' must be a non-empty string, got {repr(value)}")
-
-    return value
 
 
 def design_bed_basename():
