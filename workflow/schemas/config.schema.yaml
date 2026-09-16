@@ -1,46 +1,59 @@
-$schema: "http://json-schema.org/draft-04/schema#"
+$schema: "https://json-schema.org/draft/2020-12/schema"
 description: snakemake configuration file
 type: object
 properties:
   samples:
     type: string
+    minLength: 1
   units:
     type: string
+    minLength: 1
   resources:
     type: string
+    minLength: 1
     description: Path to resources.yaml file
   default_container:
     type: string
+    minLength: 1
     description: name or path to a default docker/singularity container
   reference:
     type: object
     properties:
+      design_bed:
+        type: string
+        minLength: 1
+        description: path to the panel design bed file
+      dict:
+        type: string
+        minLength: 1
+        description: path to the reference sequence dictionary (.dict)
       fasta:
         type: string
+        minLength: 1
         description: path to fasta reference file
       mappability:
         type: string
+        minLength: 1
         description: path to fasta mappability file
-  required:
-    - samples
-    - units
-    - resources
-    - default_container
-
+    required:
+      - fasta
   bcftools_merge:
     type: object
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       extra:
         type: string
         description: extra parameters sent to bcftools_merge
       info_rules:
         type: string
+        minLength: 1
         description: option how bcftools should merge info in the vcf file
       output_type:
         type: string
+        minLength: 1
         description: output file zip option
 
   bed_to_interval_list:
@@ -48,6 +61,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
 
   cnvkit_create_targets:
@@ -55,6 +69,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
 
   cnvkit_create_anti_targets:
@@ -62,6 +77,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
 
   cnvkit_build_normal_reference:
@@ -69,9 +85,11 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       mappability:
         type: string
+        minLength: 1
         description: file with mappability information
       extra:
         type: string
@@ -82,6 +100,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       min_dp:
         type: integer
@@ -95,11 +114,13 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       callers:
         type: array
         items:
             type: string
+            minLength: 1
         description: list of variant callers to include
 
   collect_read_counts:
@@ -107,6 +128,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       extra:
         type: string
@@ -117,6 +139,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       extra:
         type: string
@@ -128,15 +151,18 @@ properties:
     properties:
       model:
         type: string
+        minLength: 1
         description: type of model to use for variant calling
       name:
         type: string
+        minLength: 1
         description: sample name
       benchmark_repeats:
         type: integer
         description: set number of times benchmark should be repeated
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       extra:
         type: string
@@ -147,6 +173,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
 
   exomedepth_reference:
@@ -154,6 +181,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       extra:
         type: string
@@ -168,9 +196,11 @@ properties:
         description: set number of times benchmark should be repeated
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       chrs:
         type: string
+        minLength: 1
         description: comma-separated list of chromosomes to count reads in
       window:
         type: integer
@@ -193,6 +223,7 @@ properties:
         description: set number of times benchmark should be repeated
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
 
   ichorcna_offtarget_panel_of_normals:
@@ -204,21 +235,27 @@ properties:
         description: set number of times benchmark should be repeated
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       gc_wig:
         type: string
+        minLength: 1
         description: path to GC-content wig file for the reference genome
       map_wig:
         type: string
+        minLength: 1
         description: path to mappability score wig file for the reference genome
       centromere:
         type: string
+        minLength: 1
         description: path to file containing centromere locations
       chrs:
         type: string
+        minLength: 1
         description: chromosomes to analyze, as an R vector expression
       chr_normalize:
         type: string
+        minLength: 1
         description: >-
           Chromosomes to normalize GC/mappability biases on, as an R vector expression.
           Currently has no effect: createPanelOfNormals.R parses and re-styles this value
@@ -227,6 +264,7 @@ properties:
           ichorCNA version fixes this upstream.
       genome_style:
         type: string
+        minLength: 1
         description: >-
           NCBI or UCSC chromosome naming convention. Must be "NCBI": createPanelOfNormals.R
           never forwards this to its own call to loadReadCountsFromWig(), which defaults to
@@ -235,6 +273,7 @@ properties:
           NCBI-styled counts, and keepChr(counts, chrs) then retains zero bins.
       method:
         type: string
+        minLength: 1
         enum: [median, mean]
         description: >-
           Method used to summarize the normal cohort's per-bin values. Must be exactly
@@ -253,9 +292,11 @@ properties:
         description: set number of times benchmark should be repeated
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       bed:
         type: string
+        minLength: 1
         description: path to design bed file
 
   jumble_reference:
@@ -267,18 +308,23 @@ properties:
         description: set number of times benchmark should be repeated
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       annotation:
         type: string
+        minLength: 1
         description: path to annotation file
       bed:
         type: string
+        minLength: 1
         description: path to design bed file
       input_dir:
         type: string
+        minLength: 1
         description: path to input directory, determined from input files
       output_dir:
         type: string
+        minLength: 1
         description: path to output directory
 
   msisensor_pro_scan:
@@ -286,6 +332,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
 
   msisensor_pro_input_file:
@@ -293,6 +340,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
 
   msisensor_pro_baseline:
@@ -300,6 +348,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       extra:
         type: string
@@ -310,12 +359,15 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       bin_length:
         type: string
+        minLength: 1
         description: size of bin regions (WGS 1000, Exomes/target 0)
       padding:
         type: string
+        minLength: 1
         description: bases added to design regions (WGS 0, Exomes/target 250)
       extra:
         type: string
@@ -326,9 +378,11 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       genome:
         type: string
+        minLength: 1
         description: reference genome
       average_off_target_width:
         type: integer
@@ -339,6 +393,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
 
   purecn_coverage:
@@ -346,12 +401,14 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       extra:
         type: string
         description: extra parameters sent to purecn_coverage
       intervals:
         type: string
+        minLength: 1
         description: interval panel design file
 
   purecn_coverage_list:
@@ -359,6 +416,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
 
   purecn_normal_db:
@@ -366,9 +424,11 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       genome:
         type: string
+        minLength: 1
         description: reference genome
       
   svdb_build:
@@ -376,6 +436,7 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
 
   svdb_export:
@@ -383,7 +444,14 @@ properties:
     properties:
       container:
         type: string
+        minLength: 1
         description: name or path to docker/singularity container
       extra:
         type: string
         description: extra parameters sent to svdb_export
+
+required:
+  - samples
+  - units
+  - resources
+  - default_container

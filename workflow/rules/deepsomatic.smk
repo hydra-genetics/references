@@ -8,14 +8,14 @@ rule deepsomatic_pon:
     input:
         bam=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="N")[0],
         bai=lambda wildcards: get_input_aligned_bam(wildcards, config, set_type="N")[1],
-        ref=config.get("reference", {}).get("fasta", ""),
-        bed=config.get("reference", {}).get("design_bed", ""),
+        ref=lambda wildcards: get_config_value("reference", "fasta"),
+        bed=lambda wildcards: get_config_value("reference", "design_bed"),
     output:
         tmpdir=temp(directory("references/deepsomatic_pon/{sample}.tmp")),
         vcf=temp("references/deepsomatic_pon/{sample}.pon.vcf.gz"),
     params:
         extra=config.get("deepsomatic_pon", {}).get("extra", ""),
-        model=config.get("deepsomatic_pon", {}).get("model", ""),
+        model=lambda wildcards: get_config_value("deepsomatic_pon", "model"),
         name=lambda wildcards: f"{wildcards.sample}",
     log:
         dir="references/deepsomatic_pon/{sample}.deepsomatic_pon.dir.log",

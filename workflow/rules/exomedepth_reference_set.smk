@@ -39,7 +39,7 @@ rule exomedepth_reference:
     output:
         reference="references/exomedepth_reference/RefCount.Rdata",
     params:
-        bed=config.get("reference", {}).get("design_bed", ""),
+        bed=lambda wildcards: get_config_value("reference", "design_bed"),
         extra=config.get("exomedepth_reference", {}).get("extra", ""),
     log:
         "references/exomedepth_reference/bam_files.list.output.log",

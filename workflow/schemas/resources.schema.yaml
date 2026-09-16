@@ -1,4 +1,4 @@
-$schema: "http://json-schema.org/draft-04/schema#"
+$schema: "https://json-schema.org/draft/2020-12/schema"
 description: snakemake configuration file
 type: object
 properties:
@@ -27,9 +27,6 @@ properties:
       - partition
       - threads
       - time
-
-  required:
-    - default_resources
 
   deepsomatic_pon:
     type: object
@@ -151,3 +148,6 @@ properties:
       time:
         type: string
         description: max execution time
+
+required:
+  - default_resources

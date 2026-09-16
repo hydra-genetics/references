@@ -6,8 +6,8 @@ __license__ = "GPL3"
 
 rule purecn_interval_file:
     input:
-        ref_fasta=config.get("reference", {}).get("fasta", ""),
-        design_bed=config.get("reference", {}).get("design_bed", ""),
+        ref_fasta=lambda wildcards: get_config_value("reference", "fasta"),
+        design_bed=lambda wildcards: get_config_value("reference", "design_bed"),
     output:
         intervals_file=temp("references/purecn_interval_file/targets_intervals.txt"),
         optimized_bed=temp("references/purecn_interval_file/targets_optimized.bed"),
@@ -79,7 +79,7 @@ rule purecn_coverage:
     output:
         coverage_list=get_coverage_files(samples, units),
     params:
-        intervals=config.get("purecn_coverage", {}).get("intervals", ""),
+        intervals=lambda wildcards: get_config_value("purecn_coverage", "intervals"),
         extra=config.get("purecn_coverage", {}).get("extra", ""),
     log:
         "references/purecn_coverage/purecn_coverage.output.log",

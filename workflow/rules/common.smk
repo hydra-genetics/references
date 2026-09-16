@@ -6,16 +6,22 @@ __copyright__ = "Copyright 2021, Jonas A"
 __email__ = "jonas.almlof@igp.uu.se"
 __license__ = "GPL-3"
 
+import os
+import re
+import sys
+import typing
+
 import pandas as pd
 from snakemake.utils import validate
 from snakemake.utils import min_version
 
+from hydra_genetics.utils.config import config_accessor
 from hydra_genetics.utils.resources import load_resources
 from hydra_genetics.utils.samples import *
 from hydra_genetics.utils.units import *
 from hydra_genetics.utils.misc import get_input_aligned_bam
 
-min_version("7.8.0")
+min_version("9.0.0")
 
 ### Set and validate config file
 
@@ -38,7 +44,22 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 units = pd.read_table(config["units"], dtype=str).set_index(["sample", "type"], drop=False).sort_index()
 validate(units, schema="../schemas/units.schema.yaml")
 
+get_config_value = config_accessor(config, module="references")
+
 ### Set wildcard constraints
+
+
+def design_bed_basename():
+    """
+    Basename of the design bed, used to name the PoN artefacts.
+
+    Several rules build output, log and benchmark paths from this, and those must resolve
+    at parse time, so this cannot raise the way get_config_value does -- a workflow that
+    never builds a PoN must still be able to parse those rules. An unset design_bed
+    therefore still yields "" here; config.schema.yaml constrains the value, and the
+    matching input/params entries go through get_config_value and fail loudly.
+    """
+    return config.get("reference", {}).get("design_bed", "").split("/")[-1]
 
 
 def get_bams(units: pd.DataFrame) -> typing.List[str]:
@@ -145,8 +166,8 @@ def get_units_column(units: pd.DataFrame, column: str) -> typing.List[str]:
 
 
 wildcard_constraints:
-    sample="|".join(samples.index),
-    unit="N|T|R",
+    sample="|".join(re.escape(s) for s in samples.index),
+    type="N|T|R",
 
 
 # Output files commented out as they do not work in integration testing using small files

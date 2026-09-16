@@ -92,9 +92,9 @@ rule ichorcna_offtarget_panel_of_normals:
         # which don't exist on the host filesystem Snakemake itself checks
         # against - declaring them as input made dry-run/DAG-building fail
         # with a false "missing input file" for any such path.
-        gc_wig=config.get("ichorcna_offtarget_panel_of_normals", {}).get("gc_wig", ""),
-        map_wig=config.get("ichorcna_offtarget_panel_of_normals", {}).get("map_wig", ""),
-        centromere=config.get("ichorcna_offtarget_panel_of_normals", {}).get("centromere", ""),
+        gc_wig=lambda wildcards: get_config_value("ichorcna_offtarget_panel_of_normals", "gc_wig"),
+        map_wig=lambda wildcards: get_config_value("ichorcna_offtarget_panel_of_normals", "map_wig"),
+        centromere=lambda wildcards: get_config_value("ichorcna_offtarget_panel_of_normals", "centromere"),
         chrs=config.get("ichorcna_offtarget_panel_of_normals", {}).get("chrs", 'c(1:22,"X")'),
         # chr_normalize is a no-op: createPanelOfNormals.R parses and re-styles it but
         # never forwards it to loadReadCountsFromWig(), which always uses its own
