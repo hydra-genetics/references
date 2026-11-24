@@ -87,7 +87,7 @@ properties:
         type: integer
         description: min depth to be included in the background calculation
       max_af:
-        type: float
+        type: number
         description: max variant allele frequency to be included in the background calculation
 
   create_artifact_file:
